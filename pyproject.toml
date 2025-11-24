@@ -1,0 +1,19 @@
+[project]
+name = "pooh-pursues-patterns"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "datasets>=4.4.1",
+    "einops>=0.8.1",
+    "jupyterlab>=4.5.0",
+    "matplotlib>=3.10.7",
+    "numpy>=2.3.5",
+    "scikit-learn>=1.7.2",
+    "seaborn>=0.13.2",
+    "sentencepiece>=0.2.1",
+    "tokenizers>=0.22.1",
+    "torch>=2.9.1",
+    "tqdm>=4.67.1",
+    "transformers>=4.57.1",
+]

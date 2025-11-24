@@ -262,43 +262,25 @@ Prerequisites:
 * Python 3.10+
 * uv installed (`pip install uv` or via official installer)
 
-Create and activate the environment:
+Add core dependencies:
 
 ```
-uv venv
-source .venv/bin/activate  # macOS/Linux
-.venv\\Scripts\\activate     # Windows
-```
-
-Install core dependencies:
-
-```
-uv pip install \
-  torch \
-  transformers \
-  datasets \
-  numpy \
-  matplotlib \
-  seaborn \
-  scikit-learn \
-  einops \
-  jupyterlab \
-  sentencepiece \
-  tokenizers \
-  tqdm
+uv add torch transformers datasets numpy matplotlib seaborn scikit-learn einops jupyterlab sentencepiece tokenizers tqdm
 ```
 
 Optional, for performance experiments:
 
 ```
-uv pip install flash-attn vllm deepspeed accelerate
+uv add flash-attn vllm deepspeed accelerate
 ```
 
-Freeze environment:
+Sync and install all dependencies:
 
 ```
-uv pip freeze > requirements.txt
+uv sync
 ```
+
+This will automatically create a virtual environment, install all dependencies from `pyproject.toml`, and generate a `uv.lock` file for reproducible builds.
 
 Suggested hardware:
 
@@ -306,7 +288,7 @@ Suggested hardware:
 * GPU: NVIDIA with 12GB+ VRAM (for Chapters 8+)
 * RAM: 16–32GB recommended
 
-Each chapter includes its own `requirements.txt` if additional packages are required.
+All chapters share a single uv environment managed at the project root.
 
 ---
 
@@ -344,13 +326,9 @@ pooh-pursues-patterns/
 │   ├── plots/
 │   └── animations/
 │
-├── utils/
-│   ├── attention.py
-│   ├── tokenizer.py
-│   └── plotting.py
-│
-├── README.md
-└── requirements.txt
+├── pyproject.toml
+├── uv.lock
+└── README.md
 ```
 
 Each chapter folder contains:
