@@ -167,6 +167,8 @@ def main():
 
             if steps % LOGGING_INTERVAL == 0:
                 with torch.no_grad():
+                    was_training = current_model.training
+                    current_model.eval()
                     kl_div = kl_divergence(
                         current_model,
                         reference_model,
@@ -179,6 +181,8 @@ def main():
                             "rejected_labels": rejected_labels,
                         },
                     )
+                    if was_training:
+                        current_model.train()
                 train_iterator.set_postfix({"kl": f"{kl_div.item():.4f}", "loss": f"{loss.item():.4f}"})
                 print(f"Step {steps}: KL Div: {kl_div.item():.4f}, Loss: {loss.item():.4f}")
             steps += 1
