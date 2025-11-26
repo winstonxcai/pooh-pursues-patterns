@@ -3,9 +3,9 @@ from functools import partial
 
 import torch
 import numpy as np
-from constants import (ALPHA, BATCH_SIZE, BETA, DATASET_NAME, DEVICE, LEARNING_RATE,
-                       LOGGING_INTERVAL, MAX_SEQ_LEN, MODEL_NAME, NUM_EPOCHS,
-                       NUM_SAMPLES, SEED, SPLIT_RATIO, WARMUP_RATIO, R)
+from constants import (ALPHA, BATCH_SIZE, BETA, DATASET_NAME, DEVICE, GRAD_ACCUM_STEPS,
+                       LEARNING_RATE, LOGGING_INTERVAL, MAX_SEQ_LEN, MODEL_NAME,
+                       NUM_EPOCHS, NUM_SAMPLES, SEED, SPLIT_RATIO, WARMUP_RATIO, R)
 from datasets import load_dataset as hf_load_dataset
 from dpo_utils import dpo_loss, kl_divergence, preference_accuracy, sequence_logprobs
 from lora import inject_lora
@@ -156,6 +156,8 @@ def main():
         param.requires_grad = False
 
     current_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
+    current_model.gradient_checkpointing_enable()
+    current_model.config.use_cache = False  # save memory during training
     current_model = inject_lora(current_model, R, ALPHA)
 
     full_dataset = hf_load_dataset(DATASET_NAME, split="train")
@@ -185,22 +187,28 @@ def main():
     val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
     optimizer = torch.optim.AdamW(current_model.parameters(), lr=LEARNING_RATE)
-    total_steps = len(train_loader) * NUM_EPOCHS
-    warmup_steps = int(total_steps * WARMUP_RATIO)
+    total_optimizer_steps = (len(train_loader) * NUM_EPOCHS + GRAD_ACCUM_STEPS - 1) // GRAD_ACCUM_STEPS
+    warmup_steps = int(total_optimizer_steps * WARMUP_RATIO)
     scheduler = get_linear_schedule_with_warmup(
         optimizer,
         num_warmup_steps=warmup_steps,
-        num_training_steps=total_steps,
+        num_training_steps=total_optimizer_steps,
     )
 
-    steps = 0
+    steps = 0  # micro steps
+    optimizer_steps = 0
+    optimizer.zero_grad(set_to_none=True)
+    amp_device = DEVICE.type if DEVICE.type in ("cuda", "mps") else "cpu"
+    use_amp = amp_device in ("cuda", "mps")
+    amp_dtype = torch.bfloat16 if (amp_device == "cuda" and torch.cuda.is_bf16_supported()) else torch.float16
+
     for epoch in range(NUM_EPOCHS):
         train_iterator = tqdm(
             train_loader,
             desc=f"Epoch {epoch + 1}/{NUM_EPOCHS}",
             leave=False,
         )
-        for batch in train_iterator:
+        for batch_idx, batch in enumerate(train_iterator):
             chosen_ids = batch["chosen_ids"].to(DEVICE)
             chosen_mask = batch["chosen_mask"].to(DEVICE)
             chosen_labels = batch["chosen_labels"].to(DEVICE)
@@ -208,31 +216,39 @@ def main():
             rejected_mask = batch["rejected_mask"].to(DEVICE)
             rejected_labels = batch["rejected_labels"].to(DEVICE)
 
-            policy_chosen_logp, _ = sequence_logprobs(
-                current_model, chosen_ids, chosen_mask, chosen_labels
-            )
-            policy_rejected_logp, _ = sequence_logprobs(
-                current_model, rejected_ids, rejected_mask, rejected_labels
-            )
-            with torch.no_grad():
-                reference_chosen_logp, _ = sequence_logprobs(
-                    reference_model, chosen_ids, chosen_mask, chosen_labels
+            with torch.autocast(device_type=amp_device, dtype=amp_dtype, enabled=use_amp):
+                policy_chosen_logp, _ = sequence_logprobs(
+                    current_model, chosen_ids, chosen_mask, chosen_labels
                 )
-                reference_rejected_logp, _ = sequence_logprobs(
-                    reference_model, rejected_ids, rejected_mask, rejected_labels
+                policy_rejected_logp, _ = sequence_logprobs(
+                    current_model, rejected_ids, rejected_mask, rejected_labels
                 )
-            loss = dpo_loss(
-                policy_chosen_logp,
-                policy_rejected_logp,
-                reference_chosen_logp,
-                reference_rejected_logp,
-                beta=BETA,
-            )
+                with torch.no_grad():
+                    reference_chosen_logp, _ = sequence_logprobs(
+                        reference_model, chosen_ids, chosen_mask, chosen_labels
+                    )
+                    reference_rejected_logp, _ = sequence_logprobs(
+                        reference_model, rejected_ids, rejected_mask, rejected_labels
+                    )
+                loss = dpo_loss(
+                    policy_chosen_logp,
+                    policy_rejected_logp,
+                    reference_chosen_logp,
+                    reference_rejected_logp,
+                    beta=BETA,
+                )
 
-            optimizer.zero_grad()
+            loss_to_log = loss.detach()
+            loss = loss / GRAD_ACCUM_STEPS
             loss.backward()
-            optimizer.step()
-            scheduler.step()
+
+            should_step = (steps + 1) % GRAD_ACCUM_STEPS == 0 or (batch_idx + 1 == len(train_loader))
+            if should_step:
+                torch.nn.utils.clip_grad_norm_(current_model.parameters(), max_norm=1.0)
+                optimizer.step()
+                scheduler.step()
+                optimizer.zero_grad(set_to_none=True)
+                optimizer_steps += 1
 
             if steps % LOGGING_INTERVAL == 0:
                 with torch.no_grad():
@@ -252,10 +268,10 @@ def main():
                         current_model.train()
                 pref_acc = preference_accuracy(policy_chosen_logp, policy_rejected_logp)
                 train_iterator.set_postfix(
-                    {"kl": f"{kl_div.item():.4f}", "loss": f"{loss.item():.4f}", "pref_acc": f"{pref_acc.item():.3f}"}
+                    {"kl": f"{kl_div.item():.4f}", "loss": f"{loss_to_log.item():.4f}", "pref_acc": f"{pref_acc.item():.3f}"}
                 )
                 print(
-                    f"Step {steps}: KL Div: {kl_div.item():.4f}, Loss: {loss.item():.4f}, Pref Acc: {pref_acc.item():.3f}"
+                    f"Step {steps}: KL Div: {kl_div.item():.4f}, Loss: {loss_to_log.item():.4f}, Pref Acc: {pref_acc.item():.3f}"
                 )
             steps += 1
 
