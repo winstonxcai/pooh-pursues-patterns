@@ -59,4 +59,15 @@ def kl_divergence(current_model, reference_model, batch):
     current_log_probs = F.log_softmax(current_logits, dim=-1)
     reference_probs = F.softmax(reference_logits, dim=-1)
 
-    return F.kl_div(current_log_probs, reference_probs, log_target=False, reduction="batchmean")
+    per_token_kl = F.kl_div(
+        current_log_probs,
+        reference_probs,
+        log_target=False,
+        reduction="none",
+    ).sum(dim=-1)
+
+    mask = chosen_mask.to(per_token_kl.dtype)
+    masked_kl = (per_token_kl * mask).sum()
+    normalization = mask.sum().clamp_min(1.0)
+
+    return masked_kl / normalization
