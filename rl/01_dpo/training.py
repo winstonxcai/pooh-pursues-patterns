@@ -8,6 +8,7 @@ from datasets import load_dataset as hf_load_dataset
 from dpo_utils import compute_logprobs, dpo_loss, kl_divergence
 from lora import inject_lora
 from torch.utils.data import DataLoader
+from tqdm.auto import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
@@ -77,7 +78,11 @@ def evaluate(model, data_loader):
     total_batches = 0
 
     with torch.no_grad():
-        for batch in data_loader:
+        for batch in tqdm(
+            data_loader,
+            desc="Evaluating",
+            leave=False,
+        ):
             chosen_ids = batch["chosen_ids"].to(DEVICE)
             chosen_mask = batch["chosen_mask"].to(DEVICE)
             chosen_labels = batch["chosen_labels"].to(DEVICE)
@@ -138,7 +143,12 @@ def main():
 
     steps = 0
     for epoch in range(NUM_EPOCHS):
-        for batch in train_loader:
+        train_iterator = tqdm(
+            train_loader,
+            desc=f"Epoch {epoch + 1}/{NUM_EPOCHS}",
+            leave=False,
+        )
+        for batch in train_iterator:
             chosen_ids = batch["chosen_ids"].to(DEVICE)
             chosen_mask = batch["chosen_mask"].to(DEVICE)
             chosen_labels = batch["chosen_labels"].to(DEVICE)
@@ -169,6 +179,7 @@ def main():
                             "rejected_labels": rejected_labels,
                         },
                     )
+                train_iterator.set_postfix({"kl": f"{kl_div.item():.4f}", "loss": f"{loss.item():.4f}"})
                 print(f"Step {steps}: KL Div: {kl_div.item():.4f}, Loss: {loss.item():.4f}")
             steps += 1
 
