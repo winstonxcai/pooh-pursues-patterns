@@ -1,0 +1,660 @@
+2025-11-27 03:44:38,721 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 03:44:57,868 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 03:44:57,923 - INFO - Train samples: 3566 | Test samples: 396
+2025-11-27 03:44:57,924 - INFO - Computing baseline accuracy on test split...
+2025-11-27 03:46:31,259 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 03:46:38,889 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 03:46:38,922 - INFO - Train samples: 3566 | Test samples: 396
+2025-11-27 03:46:38,923 - INFO - Computing baseline accuracy on test split...
+2025-11-27 03:48:05,630 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 03:48:06,234 - INFO - Tokenizer lacked pad token; set to eos_token.
+2025-11-27 03:48:13,641 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 03:48:13,673 - INFO - Train samples: 3566 | Test samples: 396
+2025-11-27 03:48:13,675 - INFO - Computing baseline accuracy on test split...
+2025-11-27 03:50:39,931 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 03:50:40,518 - INFO - Tokenizer lacked pad token; set to eos_token.
+2025-11-27 03:50:48,133 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 03:50:48,167 - INFO - Train samples: 3566 | Test samples: 396
+2025-11-27 03:50:48,168 - INFO - Computing baseline accuracy on test split...
+2025-11-27 03:55:53,786 - INFO - Baseline test accuracy: 54.04%
+2025-11-27 03:55:53,788 - INFO - Starting training for 3 epochs
+2025-11-27 03:55:53,788 - INFO - Epoch 1/3 -- 3566 mini-batches
+2025-11-27 03:56:16,959 - INFO - step 10 | loss: 194.5496
+2025-11-27 03:56:40,086 - INFO - step 20 | loss: 4.0567
+2025-11-27 03:57:03,222 - INFO - step 30 | loss: 88.1705
+2025-11-27 03:57:26,355 - INFO - step 40 | loss: 121.0963
+2025-11-27 03:57:49,498 - INFO - step 50 | loss: 72.2538
+2025-11-27 03:58:12,580 - INFO - step 60 | loss: 35.9368
+2025-11-27 03:58:35,694 - INFO - step 70 | loss: 0.0000
+2025-11-27 03:58:58,785 - INFO - step 80 | loss: 2.0794
+2025-11-27 03:59:21,937 - INFO - step 90 | loss: 156.8467
+2025-11-27 03:59:45,121 - INFO - step 100 | loss: 0.0000
+2025-11-27 04:00:08,281 - INFO - step 110 | loss: 10.8467
+2025-11-27 04:00:31,402 - INFO - step 120 | loss: 62.5212
+2025-11-27 04:00:54,567 - INFO - step 130 | loss: 36.6928
+2025-11-27 04:01:17,701 - INFO - step 140 | loss: 16.3098
+2025-11-27 04:01:40,818 - INFO - step 150 | loss: 0.2515
+2025-11-27 04:02:03,973 - INFO - step 160 | loss: 2.0794
+2025-11-27 04:02:27,133 - INFO - step 170 | loss: 28.7450
+2025-11-27 04:02:50,259 - INFO - step 180 | loss: 0.0000
+2025-11-27 04:03:13,368 - INFO - step 190 | loss: 46.7129
+2025-11-27 04:03:36,507 - INFO - step 200 | loss: 4.4986
+2025-11-27 04:03:47,987 - INFO - Saved checkpoint to checkpoints/grpo_step_200.pt
+2025-11-27 04:04:11,020 - INFO - step 210 | loss: 9.7955
+2025-11-27 04:04:34,066 - INFO - step 220 | loss: 28.5996
+2025-11-27 04:04:57,177 - INFO - step 230 | loss: 1.2483
+2025-11-27 04:05:20,279 - INFO - step 240 | loss: 5.5454
+2025-11-27 04:05:43,391 - INFO - step 250 | loss: 15.8388
+2025-11-27 04:06:18,068 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 04:06:18,620 - INFO - Tokenizer lacked pad token; set to eos_token.
+2025-11-27 04:06:24,463 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 04:06:24,496 - INFO - Using subset: 2000/3962 samples
+2025-11-27 04:06:24,497 - INFO - Train samples: 1800 | Test samples: 200
+2025-11-27 04:06:24,498 - INFO - Computing baseline accuracy on test split...
+2025-11-27 04:08:59,110 - INFO - Baseline test accuracy: 54.50%
+2025-11-27 04:08:59,114 - INFO - Starting training for 3 epochs
+2025-11-27 04:08:59,114 - INFO - Epoch 1/3 -- 1800 mini-batches
+2025-11-27 04:09:22,197 - INFO - step 10 | avg_loss (last 10 steps): 303.9342
+2025-11-27 04:09:45,460 - INFO - step 20 | avg_loss (last 10 steps): 330.2162
+2025-11-27 04:10:08,672 - INFO - step 30 | avg_loss (last 10 steps): 242.8564
+2025-11-27 04:10:31,756 - INFO - step 40 | avg_loss (last 10 steps): 339.2877
+2025-11-27 04:10:54,781 - INFO - step 50 | avg_loss (last 10 steps): 46.8938
+2025-11-27 04:11:17,874 - INFO - step 60 | avg_loss (last 10 steps): 53.5901
+2025-11-27 04:11:40,966 - INFO - step 70 | avg_loss (last 10 steps): 31.6129
+2025-11-27 04:12:04,046 - INFO - step 80 | avg_loss (last 10 steps): 63.7264
+2025-11-27 04:12:27,168 - INFO - step 90 | avg_loss (last 10 steps): 53.7682
+2025-11-27 04:12:50,339 - INFO - step 100 | avg_loss (last 10 steps): 83.2528
+2025-11-27 04:13:13,425 - INFO - step 110 | avg_loss (last 10 steps): 83.7334
+2025-11-27 04:13:36,473 - INFO - step 120 | avg_loss (last 10 steps): 38.3518
+2025-11-27 04:13:59,559 - INFO - step 130 | avg_loss (last 10 steps): 45.7893
+2025-11-27 04:14:22,639 - INFO - step 140 | avg_loss (last 10 steps): 118.5753
+2025-11-27 04:14:45,721 - INFO - step 150 | avg_loss (last 10 steps): 32.5055
+2025-11-27 04:15:08,887 - INFO - step 160 | avg_loss (last 10 steps): 255.2506
+2025-11-27 04:15:32,087 - INFO - step 170 | avg_loss (last 10 steps): 55.1747
+2025-11-27 04:15:55,171 - INFO - step 180 | avg_loss (last 10 steps): 65.5927
+2025-11-27 04:16:18,280 - INFO - step 190 | avg_loss (last 10 steps): 72.7154
+2025-11-27 04:16:41,407 - INFO - step 200 | avg_loss (last 10 steps): 61.1290
+2025-11-27 04:16:52,749 - INFO - Saved checkpoint to checkpoints/grpo_step_200.pt
+2025-11-27 04:17:15,861 - INFO - step 210 | avg_loss (last 10 steps): 35.0517
+2025-11-27 04:17:38,927 - INFO - step 220 | avg_loss (last 10 steps): 7.1734
+2025-11-27 04:18:01,962 - INFO - step 230 | avg_loss (last 10 steps): 17.5607
+2025-11-27 04:18:24,984 - INFO - step 240 | avg_loss (last 10 steps): 14.3446
+2025-11-27 04:18:48,075 - INFO - step 250 | avg_loss (last 10 steps): 8.1266
+2025-11-27 04:19:11,131 - INFO - step 260 | avg_loss (last 10 steps): 26.3930
+2025-11-27 04:19:34,246 - INFO - step 270 | avg_loss (last 10 steps): 34.6649
+2025-11-27 04:19:57,355 - INFO - step 280 | avg_loss (last 10 steps): 41.3463
+2025-11-27 04:20:20,483 - INFO - step 290 | avg_loss (last 10 steps): 40.7372
+2025-11-27 04:20:43,633 - INFO - step 300 | avg_loss (last 10 steps): 23.3508
+2025-11-27 04:21:06,724 - INFO - step 310 | avg_loss (last 10 steps): 34.0805
+2025-11-27 04:21:29,814 - INFO - step 320 | avg_loss (last 10 steps): 14.5321
+2025-11-27 04:21:52,946 - INFO - step 330 | avg_loss (last 10 steps): 11.1550
+2025-11-27 04:22:15,998 - INFO - step 340 | avg_loss (last 10 steps): 16.9041
+2025-11-27 04:22:39,123 - INFO - step 350 | avg_loss (last 10 steps): 27.6646
+2025-11-27 04:23:02,209 - INFO - step 360 | avg_loss (last 10 steps): 16.8012
+2025-11-27 04:23:25,346 - INFO - step 370 | avg_loss (last 10 steps): 6.9661
+2025-11-27 04:23:48,436 - INFO - step 380 | avg_loss (last 10 steps): 32.4893
+2025-11-27 04:24:11,539 - INFO - step 390 | avg_loss (last 10 steps): 40.0244
+2025-11-27 05:03:17,150 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 05:03:17,150 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 05:05:39,547 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 05:06:34,729 - INFO - Checkpoints will be written to checkpoints
+2025-11-27 05:06:36,426 - INFO - Tokenizer lacked pad token; set to eos_token.
+2025-11-27 05:07:13,991 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 05:07:14,025 - INFO - Using subset: 2000/3962 samples
+2025-11-27 05:07:14,026 - INFO - Train samples: 1800 | Test samples: 200
+2025-11-27 05:07:14,027 - INFO - Computing baseline accuracy on test split...
+2025-11-27 05:08:55,707 - INFO - Tokenizer lacked pad token; set to eos_token.
+2025-11-27 05:09:01,918 - INFO - Loading dataset from ./gsm8k_grpo_real.jsonl
+2025-11-27 05:09:01,952 - INFO - Using subset: 2000/3962 samples
+2025-11-27 05:09:01,953 - INFO - Train samples: 1800 | Test samples: 200
+2025-11-27 05:09:01,954 - INFO - Computing baseline accuracy on test split...
+2025-11-27 05:11:36,402 - INFO - Baseline test accuracy: 54.50%
+2025-11-27 05:11:36,404 - INFO - Starting training for 3 epochs
+2025-11-27 05:11:36,405 - INFO - Epoch 1/3 -- 450 mini-batches
+2025-11-27 05:11:59,649 - INFO - step 10 | avg_loss (last 10 steps): 113.0699
+2025-11-27 05:12:22,806 - INFO - step 20 | avg_loss (last 10 steps): 77.3110
+2025-11-27 05:12:46,032 - INFO - step 30 | avg_loss (last 10 steps): 143.2854
+2025-11-27 05:13:09,190 - INFO - step 40 | avg_loss (last 10 steps): 146.6282
+2025-11-27 05:13:32,314 - INFO - step 50 | avg_loss (last 10 steps): 261.2603
+2025-11-27 05:13:55,424 - INFO - step 60 | avg_loss (last 10 steps): 82.1799
+2025-11-27 05:14:18,571 - INFO - step 70 | avg_loss (last 10 steps): 119.6307
+2025-11-27 05:14:41,724 - INFO - step 80 | avg_loss (last 10 steps): 39.6004
+2025-11-27 05:15:04,916 - INFO - step 90 | avg_loss (last 10 steps): 123.7397
+2025-11-27 05:15:28,062 - INFO - step 100 | avg_loss (last 10 steps): 60.7638
+2025-11-27 05:15:51,188 - INFO - step 110 | avg_loss (last 10 steps): 66.4040
+2025-11-27 05:16:14,380 - INFO - step 120 | avg_loss (last 10 steps): 54.5528
+2025-11-27 05:16:37,560 - INFO - step 130 | avg_loss (last 10 steps): 110.9325
+2025-11-27 05:17:00,701 - INFO - step 140 | avg_loss (last 10 steps): 326.8068
+2025-11-27 05:17:23,719 - INFO - step 150 | avg_loss (last 10 steps): 176.6708
+2025-11-27 05:17:46,872 - INFO - step 160 | avg_loss (last 10 steps): 116.9486
+2025-11-27 05:18:10,063 - INFO - step 170 | avg_loss (last 10 steps): 323.8111
+2025-11-27 05:18:33,149 - INFO - step 180 | avg_loss (last 10 steps): 142.2832
+2025-11-27 05:18:56,254 - INFO - step 190 | avg_loss (last 10 steps): 157.9063
+2025-11-27 05:19:19,296 - INFO - step 200 | avg_loss (last 10 steps): 374.1515
+2025-11-27 05:19:42,265 - INFO - step 210 | avg_loss (last 10 steps): 710.5173
+2025-11-27 05:20:05,349 - INFO - step 220 | avg_loss (last 10 steps): 109.5655
+2025-11-27 05:20:28,393 - INFO - step 230 | avg_loss (last 10 steps): 84.7181
+2025-11-27 05:20:51,433 - INFO - step 240 | avg_loss (last 10 steps): 31.7341
+2025-11-27 05:21:14,554 - INFO - step 250 | avg_loss (last 10 steps): 96.1975
+2025-11-27 05:21:37,620 - INFO - step 260 | avg_loss (last 10 steps): 81.7816
+2025-11-27 05:22:00,718 - INFO - step 270 | avg_loss (last 10 steps): 34.8768
+2025-11-27 05:22:23,799 - INFO - step 280 | avg_loss (last 10 steps): 34.4915
+2025-11-27 05:22:46,887 - INFO - step 290 | avg_loss (last 10 steps): 53.1289
+2025-11-27 05:23:09,908 - INFO - step 300 | avg_loss (last 10 steps): 38.2633
+2025-11-27 05:23:32,973 - INFO - step 310 | avg_loss (last 10 steps): 46.8819
+2025-11-27 05:23:55,958 - INFO - step 320 | avg_loss (last 10 steps): 32.2253
+2025-11-27 05:24:19,017 - INFO - step 330 | avg_loss (last 10 steps): 90.6451
+2025-11-27 05:24:42,044 - INFO - step 340 | avg_loss (last 10 steps): 121.9565
+2025-11-27 05:25:05,076 - INFO - step 350 | avg_loss (last 10 steps): 276.3303
+2025-11-27 05:25:28,117 - INFO - step 360 | avg_loss (last 10 steps): 74.0156
+2025-11-27 05:25:51,169 - INFO - step 370 | avg_loss (last 10 steps): 114.4411
+2025-11-27 05:26:14,221 - INFO - step 380 | avg_loss (last 10 steps): 80.0468
+2025-11-27 05:26:37,267 - INFO - step 390 | avg_loss (last 10 steps): 60.6482
+2025-11-27 05:27:00,265 - INFO - step 400 | avg_loss (last 10 steps): 81.6661
+2025-11-27 05:27:23,293 - INFO - step 410 | avg_loss (last 10 steps): 47.8959
+2025-11-27 05:27:46,306 - INFO - step 420 | avg_loss (last 10 steps): 87.3730
+2025-11-27 05:28:09,361 - INFO - step 430 | avg_loss (last 10 steps): 28.4324
+2025-11-27 05:28:32,409 - INFO - step 440 | avg_loss (last 10 steps): 52.3939
+2025-11-27 05:28:55,455 - INFO - step 450 | avg_loss (last 10 steps): 62.8122
+2025-11-27 05:29:18,503 - INFO - step 460 | avg_loss (last 10 steps): 63.6239
+2025-11-27 05:29:41,574 - INFO - step 470 | avg_loss (last 10 steps): 54.4354
+2025-11-27 05:30:04,621 - INFO - step 480 | avg_loss (last 10 steps): 37.8501
+2025-11-27 05:30:27,702 - INFO - step 490 | avg_loss (last 10 steps): 54.4243
+2025-11-27 05:30:50,791 - INFO - step 500 | avg_loss (last 10 steps): 34.1048
+2025-11-27 05:31:13,852 - INFO - step 510 | avg_loss (last 10 steps): 28.4783
+2025-11-27 05:31:36,926 - INFO - step 520 | avg_loss (last 10 steps): 24.3821
+2025-11-27 05:31:59,999 - INFO - step 530 | avg_loss (last 10 steps): 24.5710
+2025-11-27 05:32:23,061 - INFO - step 540 | avg_loss (last 10 steps): 59.1057
+2025-11-27 05:32:46,133 - INFO - step 550 | avg_loss (last 10 steps): 22.2988
+2025-11-27 05:33:09,199 - INFO - step 560 | avg_loss (last 10 steps): 80.9842
+2025-11-27 05:33:32,222 - INFO - step 570 | avg_loss (last 10 steps): 72.5542
+2025-11-27 05:33:55,251 - INFO - step 580 | avg_loss (last 10 steps): 46.6927
+2025-11-27 05:34:18,281 - INFO - step 590 | avg_loss (last 10 steps): 59.4097
+2025-11-27 05:34:41,338 - INFO - step 600 | avg_loss (last 10 steps): 55.5923
+2025-11-27 05:35:04,398 - INFO - step 610 | avg_loss (last 10 steps): 38.0271
+2025-11-27 05:35:27,476 - INFO - step 620 | avg_loss (last 10 steps): 36.9992
+2025-11-27 05:35:50,516 - INFO - step 630 | avg_loss (last 10 steps): 34.5753
+2025-11-27 05:36:13,567 - INFO - step 640 | avg_loss (last 10 steps): 16.7179
+2025-11-27 05:36:36,675 - INFO - step 650 | avg_loss (last 10 steps): 56.1070
+2025-11-27 05:36:59,719 - INFO - step 660 | avg_loss (last 10 steps): 28.5860
+2025-11-27 05:37:22,817 - INFO - step 670 | avg_loss (last 10 steps): 31.1979
+2025-11-27 05:37:45,886 - INFO - step 680 | avg_loss (last 10 steps): 22.9689
+2025-11-27 05:38:08,925 - INFO - step 690 | avg_loss (last 10 steps): 19.2798
+2025-11-27 05:38:31,971 - INFO - step 700 | avg_loss (last 10 steps): 25.2008
+2025-11-27 05:38:55,015 - INFO - step 710 | avg_loss (last 10 steps): 23.1682
+2025-11-27 05:39:18,088 - INFO - step 720 | avg_loss (last 10 steps): 49.1843
+2025-11-27 05:39:41,133 - INFO - step 730 | avg_loss (last 10 steps): 43.9893
+2025-11-27 05:40:04,263 - INFO - step 740 | avg_loss (last 10 steps): 18.6308
+2025-11-27 05:40:27,370 - INFO - step 750 | avg_loss (last 10 steps): 47.1165
+2025-11-27 05:40:50,477 - INFO - step 760 | avg_loss (last 10 steps): 20.9362
+2025-11-27 05:41:13,544 - INFO - step 770 | avg_loss (last 10 steps): 17.7868
+2025-11-27 05:41:36,559 - INFO - step 780 | avg_loss (last 10 steps): 27.2792
+2025-11-27 05:41:59,638 - INFO - step 790 | avg_loss (last 10 steps): 76.4428
+2025-11-27 05:42:22,695 - INFO - step 800 | avg_loss (last 10 steps): 26.6937
+2025-11-27 05:42:45,793 - INFO - step 810 | avg_loss (last 10 steps): 21.9858
+2025-11-27 05:43:08,889 - INFO - step 820 | avg_loss (last 10 steps): 25.7694
+2025-11-27 05:43:32,004 - INFO - step 830 | avg_loss (last 10 steps): 32.2025
+2025-11-27 05:43:55,068 - INFO - step 840 | avg_loss (last 10 steps): 35.2015
+2025-11-27 05:44:18,174 - INFO - step 850 | avg_loss (last 10 steps): 42.6554
+2025-11-27 05:44:41,261 - INFO - step 860 | avg_loss (last 10 steps): 12.2081
+2025-11-27 05:45:04,349 - INFO - step 870 | avg_loss (last 10 steps): 12.5310
+2025-11-27 05:45:27,436 - INFO - step 880 | avg_loss (last 10 steps): 26.0636
+2025-11-27 05:45:50,545 - INFO - step 890 | avg_loss (last 10 steps): 44.8736
+2025-11-27 05:46:13,600 - INFO - step 900 | avg_loss (last 10 steps): 27.6747
+2025-11-27 05:46:36,680 - INFO - step 910 | avg_loss (last 10 steps): 28.3253
+2025-11-27 05:46:59,763 - INFO - step 920 | avg_loss (last 10 steps): 18.3642
+2025-11-27 05:47:22,834 - INFO - step 930 | avg_loss (last 10 steps): 37.9793
+2025-11-27 05:47:45,912 - INFO - step 940 | avg_loss (last 10 steps): 12.5102
+2025-11-27 05:48:08,984 - INFO - step 950 | avg_loss (last 10 steps): 5.5304
+2025-11-27 05:48:32,082 - INFO - step 960 | avg_loss (last 10 steps): 13.3742
+2025-11-27 05:48:55,153 - INFO - step 970 | avg_loss (last 10 steps): 17.0691
+2025-11-27 05:49:18,204 - INFO - step 980 | avg_loss (last 10 steps): 15.5826
+2025-11-27 05:49:41,285 - INFO - step 990 | avg_loss (last 10 steps): 16.9665
+2025-11-27 05:50:04,348 - INFO - step 1000 | avg_loss (last 10 steps): 19.4237
+2025-11-27 05:50:27,439 - INFO - step 1010 | avg_loss (last 10 steps): 30.6793
+2025-11-27 05:50:50,488 - INFO - step 1020 | avg_loss (last 10 steps): 8.1913
+2025-11-27 05:51:13,563 - INFO - step 1030 | avg_loss (last 10 steps): 34.8626
+2025-11-27 05:51:36,634 - INFO - step 1040 | avg_loss (last 10 steps): 11.2152
+2025-11-27 05:51:59,728 - INFO - step 1050 | avg_loss (last 10 steps): 12.1807
+2025-11-27 05:52:22,799 - INFO - step 1060 | avg_loss (last 10 steps): 16.2798
+2025-11-27 05:52:45,867 - INFO - step 1070 | avg_loss (last 10 steps): 12.6978
+2025-11-27 05:53:08,935 - INFO - step 1080 | avg_loss (last 10 steps): 12.4139
+2025-11-27 05:53:32,038 - INFO - step 1090 | avg_loss (last 10 steps): 27.9648
+2025-11-27 05:53:55,125 - INFO - step 1100 | avg_loss (last 10 steps): 14.9073
+2025-11-27 05:54:18,228 - INFO - step 1110 | avg_loss (last 10 steps): 10.0394
+2025-11-27 05:54:41,267 - INFO - step 1120 | avg_loss (last 10 steps): 16.1070
+2025-11-27 05:55:04,371 - INFO - step 1130 | avg_loss (last 10 steps): 26.8425
+2025-11-27 05:55:27,471 - INFO - step 1140 | avg_loss (last 10 steps): 36.4511
+2025-11-27 05:55:50,566 - INFO - step 1150 | avg_loss (last 10 steps): 22.4669
+2025-11-27 05:56:13,663 - INFO - step 1160 | avg_loss (last 10 steps): 17.6715
+2025-11-27 05:56:36,756 - INFO - step 1170 | avg_loss (last 10 steps): 55.1299
+2025-11-27 05:56:59,853 - INFO - step 1180 | avg_loss (last 10 steps): 28.0304
+2025-11-27 05:57:22,913 - INFO - step 1190 | avg_loss (last 10 steps): 8.7136
+2025-11-27 05:57:45,987 - INFO - step 1200 | avg_loss (last 10 steps): 11.3687
+2025-11-27 05:58:09,046 - INFO - step 1210 | avg_loss (last 10 steps): 13.6008
+2025-11-27 05:58:32,132 - INFO - step 1220 | avg_loss (last 10 steps): 12.9027
+2025-11-27 05:58:55,187 - INFO - step 1230 | avg_loss (last 10 steps): 13.8586
+2025-11-27 05:59:18,255 - INFO - step 1240 | avg_loss (last 10 steps): 22.0418
+2025-11-27 05:59:41,358 - INFO - step 1250 | avg_loss (last 10 steps): 40.7485
+2025-11-27 06:00:04,425 - INFO - step 1260 | avg_loss (last 10 steps): 24.4179
+2025-11-27 06:00:27,495 - INFO - step 1270 | avg_loss (last 10 steps): 10.6834
+2025-11-27 06:00:50,559 - INFO - step 1280 | avg_loss (last 10 steps): 26.0962
+2025-11-27 06:01:13,636 - INFO - step 1290 | avg_loss (last 10 steps): 24.1048
+2025-11-27 06:01:36,707 - INFO - step 1300 | avg_loss (last 10 steps): 25.8080
+2025-11-27 06:01:59,797 - INFO - step 1310 | avg_loss (last 10 steps): 39.9051
+2025-11-27 06:02:22,863 - INFO - step 1320 | avg_loss (last 10 steps): 31.0059
+2025-11-27 06:02:45,935 - INFO - step 1330 | avg_loss (last 10 steps): 41.6994
+2025-11-27 06:03:09,018 - INFO - step 1340 | avg_loss (last 10 steps): 30.9174
+2025-11-27 06:03:32,114 - INFO - step 1350 | avg_loss (last 10 steps): 25.8000
+2025-11-27 06:03:55,190 - INFO - step 1360 | avg_loss (last 10 steps): 14.9603
+2025-11-27 06:04:18,308 - INFO - step 1370 | avg_loss (last 10 steps): 22.5694
+2025-11-27 06:04:41,355 - INFO - step 1380 | avg_loss (last 10 steps): 50.7428
+2025-11-27 06:05:04,433 - INFO - step 1390 | avg_loss (last 10 steps): 37.6133
+2025-11-27 06:05:27,521 - INFO - step 1400 | avg_loss (last 10 steps): 24.9111
+2025-11-27 06:05:50,585 - INFO - step 1410 | avg_loss (last 10 steps): 30.1228
+2025-11-27 06:06:13,662 - INFO - step 1420 | avg_loss (last 10 steps): 54.4268
+2025-11-27 06:06:36,725 - INFO - step 1430 | avg_loss (last 10 steps): 41.0039
+2025-11-27 06:06:59,761 - INFO - step 1440 | avg_loss (last 10 steps): 22.0044
+2025-11-27 06:07:22,855 - INFO - step 1450 | avg_loss (last 10 steps): 40.9158
+2025-11-27 06:07:45,900 - INFO - step 1460 | avg_loss (last 10 steps): 39.9637
+2025-11-27 06:08:08,995 - INFO - step 1470 | avg_loss (last 10 steps): 37.4506
+2025-11-27 06:08:32,090 - INFO - step 1480 | avg_loss (last 10 steps): 21.4110
+2025-11-27 06:08:55,187 - INFO - step 1490 | avg_loss (last 10 steps): 19.9661
+2025-11-27 06:09:18,266 - INFO - step 1500 | avg_loss (last 10 steps): 28.8316
+2025-11-27 06:09:41,329 - INFO - step 1510 | avg_loss (last 10 steps): 19.4365
+2025-11-27 06:10:04,434 - INFO - step 1520 | avg_loss (last 10 steps): 18.5959
+2025-11-27 06:10:27,532 - INFO - step 1530 | avg_loss (last 10 steps): 41.5659
+2025-11-27 06:10:50,615 - INFO - step 1540 | avg_loss (last 10 steps): 31.2152
+2025-11-27 06:11:13,718 - INFO - step 1550 | avg_loss (last 10 steps): 23.9961
+2025-11-27 06:11:36,771 - INFO - step 1560 | avg_loss (last 10 steps): 19.0331
+2025-11-27 06:11:59,851 - INFO - step 1570 | avg_loss (last 10 steps): 26.2350
+2025-11-27 06:12:22,952 - INFO - step 1580 | avg_loss (last 10 steps): 29.9962
+2025-11-27 06:12:46,056 - INFO - step 1590 | avg_loss (last 10 steps): 26.7544
+2025-11-27 06:13:09,143 - INFO - step 1600 | avg_loss (last 10 steps): 24.6240
+2025-11-27 06:13:32,241 - INFO - step 1610 | avg_loss (last 10 steps): 14.3381
+2025-11-27 06:13:55,335 - INFO - step 1620 | avg_loss (last 10 steps): 11.2664
+2025-11-27 06:14:18,426 - INFO - step 1630 | avg_loss (last 10 steps): 11.3439
+2025-11-27 06:14:41,496 - INFO - step 1640 | avg_loss (last 10 steps): 16.6078
+2025-11-27 06:15:04,582 - INFO - step 1650 | avg_loss (last 10 steps): 16.7517
+2025-11-27 06:15:27,659 - INFO - step 1660 | avg_loss (last 10 steps): 6.6694
+2025-11-27 06:15:50,713 - INFO - step 1670 | avg_loss (last 10 steps): 20.2366
+2025-11-27 06:16:13,808 - INFO - step 1680 | avg_loss (last 10 steps): 26.5408
+2025-11-27 06:16:36,894 - INFO - step 1690 | avg_loss (last 10 steps): 9.9016
+2025-11-27 06:16:59,977 - INFO - step 1700 | avg_loss (last 10 steps): 12.8407
+2025-11-27 06:17:23,059 - INFO - step 1710 | avg_loss (last 10 steps): 9.9865
+2025-11-27 06:17:46,159 - INFO - step 1720 | avg_loss (last 10 steps): 14.0509
+2025-11-27 06:18:09,272 - INFO - step 1730 | avg_loss (last 10 steps): 15.1324
+2025-11-27 06:18:32,371 - INFO - step 1740 | avg_loss (last 10 steps): 12.8590
+2025-11-27 06:18:55,477 - INFO - step 1750 | avg_loss (last 10 steps): 16.1307
+2025-11-27 06:19:18,642 - INFO - step 1760 | avg_loss (last 10 steps): 19.4553
+2025-11-27 06:19:41,742 - INFO - step 1770 | avg_loss (last 10 steps): 20.9923
+2025-11-27 06:20:04,822 - INFO - step 1780 | avg_loss (last 10 steps): 7.0851
+2025-11-27 06:20:27,922 - INFO - step 1790 | avg_loss (last 10 steps): 11.9459
+2025-11-27 06:20:51,020 - INFO - step 1800 | avg_loss (last 10 steps): 10.7997
+2025-11-27 06:23:30,593 - INFO - Test accuracy after epoch 1: 81.00%
+2025-11-27 06:23:30,595 - INFO - Epoch 2/3 -- 450 mini-batches
+2025-11-27 06:23:53,709 - INFO - step 1810 | avg_loss (last 10 steps): 19.2066
+2025-11-27 06:24:16,798 - INFO - step 1820 | avg_loss (last 10 steps): 9.1491
+2025-11-27 06:24:39,923 - INFO - step 1830 | avg_loss (last 10 steps): 12.8482
+2025-11-27 06:25:03,034 - INFO - step 1840 | avg_loss (last 10 steps): 4.8938
+2025-11-27 06:25:26,139 - INFO - step 1850 | avg_loss (last 10 steps): 5.3415
+2025-11-27 06:25:49,194 - INFO - step 1860 | avg_loss (last 10 steps): 12.2152
+2025-11-27 06:26:12,283 - INFO - step 1870 | avg_loss (last 10 steps): 17.6113
+2025-11-27 06:26:35,373 - INFO - step 1880 | avg_loss (last 10 steps): 13.5275
+2025-11-27 06:26:58,467 - INFO - step 1890 | avg_loss (last 10 steps): 8.9321
+2025-11-27 06:27:21,577 - INFO - step 1900 | avg_loss (last 10 steps): 8.3539
+2025-11-27 06:27:44,700 - INFO - step 1910 | avg_loss (last 10 steps): 9.5004
+2025-11-27 06:28:07,802 - INFO - step 1920 | avg_loss (last 10 steps): 10.2793
+2025-11-27 06:28:30,951 - INFO - step 1930 | avg_loss (last 10 steps): 11.8184
+2025-11-27 06:28:54,046 - INFO - step 1940 | avg_loss (last 10 steps): 2.5029
+2025-11-27 06:29:17,131 - INFO - step 1950 | avg_loss (last 10 steps): 10.0949
+2025-11-27 06:29:40,184 - INFO - step 1960 | avg_loss (last 10 steps): 2.8069
+2025-11-27 06:30:03,260 - INFO - step 1970 | avg_loss (last 10 steps): 11.5458
+2025-11-27 06:30:26,345 - INFO - step 1980 | avg_loss (last 10 steps): 5.3983
+2025-11-27 06:30:49,446 - INFO - step 1990 | avg_loss (last 10 steps): 3.7201
+2025-11-27 06:31:12,539 - INFO - step 2000 | avg_loss (last 10 steps): 9.2800
+2025-11-27 06:31:35,624 - INFO - step 2010 | avg_loss (last 10 steps): 7.6022
+2025-11-27 06:31:58,712 - INFO - step 2020 | avg_loss (last 10 steps): 3.8486
+2025-11-27 06:32:21,811 - INFO - step 2030 | avg_loss (last 10 steps): 9.3969
+2025-11-27 06:32:44,910 - INFO - step 2040 | avg_loss (last 10 steps): 2.8136
+2025-11-27 06:33:08,035 - INFO - step 2050 | avg_loss (last 10 steps): 15.3094
+2025-11-27 06:33:31,137 - INFO - step 2060 | avg_loss (last 10 steps): 14.7512
+2025-11-27 06:33:54,240 - INFO - step 2070 | avg_loss (last 10 steps): 2.2562
+2025-11-27 06:34:17,333 - INFO - step 2080 | avg_loss (last 10 steps): 4.9207
+2025-11-27 06:34:40,433 - INFO - step 2090 | avg_loss (last 10 steps): 7.1591
+2025-11-27 06:35:03,542 - INFO - step 2100 | avg_loss (last 10 steps): 14.6482
+2025-11-27 06:35:26,639 - INFO - step 2110 | avg_loss (last 10 steps): 3.8280
+2025-11-27 06:35:49,735 - INFO - step 2120 | avg_loss (last 10 steps): 23.0860
+2025-11-27 06:36:12,811 - INFO - step 2130 | avg_loss (last 10 steps): 20.1706
+2025-11-27 06:36:35,869 - INFO - step 2140 | avg_loss (last 10 steps): 8.5335
+2025-11-27 06:36:58,913 - INFO - step 2150 | avg_loss (last 10 steps): 10.6033
+2025-11-27 06:37:21,960 - INFO - step 2160 | avg_loss (last 10 steps): 10.2441
+2025-11-27 06:37:44,995 - INFO - step 2170 | avg_loss (last 10 steps): 8.3638
+2025-11-27 06:38:08,044 - INFO - step 2180 | avg_loss (last 10 steps): 21.8702
+2025-11-27 06:38:31,113 - INFO - step 2190 | avg_loss (last 10 steps): 12.0513
+2025-11-27 06:38:54,199 - INFO - step 2200 | avg_loss (last 10 steps): 18.5092
+2025-11-27 06:39:17,277 - INFO - step 2210 | avg_loss (last 10 steps): 8.1374
+2025-11-27 06:39:40,382 - INFO - step 2220 | avg_loss (last 10 steps): 18.4040
+2025-11-27 06:40:03,474 - INFO - step 2230 | avg_loss (last 10 steps): 7.1685
+2025-11-27 06:40:26,558 - INFO - step 2240 | avg_loss (last 10 steps): 15.0556
+2025-11-27 06:40:49,668 - INFO - step 2250 | avg_loss (last 10 steps): 6.0584
+2025-11-27 06:41:12,757 - INFO - step 2260 | avg_loss (last 10 steps): 13.6081
+2025-11-27 06:41:35,822 - INFO - step 2270 | avg_loss (last 10 steps): 15.2103
+2025-11-27 06:41:58,900 - INFO - step 2280 | avg_loss (last 10 steps): 4.9912
+2025-11-27 06:42:22,017 - INFO - step 2290 | avg_loss (last 10 steps): 12.2883
+2025-11-27 06:42:45,098 - INFO - step 2300 | avg_loss (last 10 steps): 15.2699
+2025-11-27 06:43:08,191 - INFO - step 2310 | avg_loss (last 10 steps): 8.3528
+2025-11-27 06:43:31,225 - INFO - step 2320 | avg_loss (last 10 steps): 8.5722
+2025-11-27 06:43:54,277 - INFO - step 2330 | avg_loss (last 10 steps): 1.6933
+2025-11-27 06:44:17,343 - INFO - step 2340 | avg_loss (last 10 steps): 11.7797
+2025-11-27 06:44:40,437 - INFO - step 2350 | avg_loss (last 10 steps): 12.2446
+2025-11-27 06:45:03,517 - INFO - step 2360 | avg_loss (last 10 steps): 4.4976
+2025-11-27 06:45:26,614 - INFO - step 2370 | avg_loss (last 10 steps): 7.4674
+2025-11-27 06:45:49,755 - INFO - step 2380 | avg_loss (last 10 steps): 5.1831
+2025-11-27 06:46:12,834 - INFO - step 2390 | avg_loss (last 10 steps): 7.3440
+2025-11-27 06:46:35,898 - INFO - step 2400 | avg_loss (last 10 steps): 2.3314
+2025-11-27 06:46:58,979 - INFO - step 2410 | avg_loss (last 10 steps): 12.5773
+2025-11-27 06:47:22,051 - INFO - step 2420 | avg_loss (last 10 steps): 19.2782
+2025-11-27 06:47:45,117 - INFO - step 2430 | avg_loss (last 10 steps): 2.7091
+2025-11-27 06:48:08,191 - INFO - step 2440 | avg_loss (last 10 steps): 4.1502
+2025-11-27 06:48:31,295 - INFO - step 2450 | avg_loss (last 10 steps): 14.4041
+2025-11-27 06:48:54,343 - INFO - step 2460 | avg_loss (last 10 steps): 1.8145
+2025-11-27 06:49:17,413 - INFO - step 2470 | avg_loss (last 10 steps): 10.6844
+2025-11-27 06:49:40,471 - INFO - step 2480 | avg_loss (last 10 steps): 10.3443
+2025-11-27 06:50:03,534 - INFO - step 2490 | avg_loss (last 10 steps): 6.3719
+2025-11-27 06:50:26,589 - INFO - step 2500 | avg_loss (last 10 steps): 2.0289
+2025-11-27 06:50:49,672 - INFO - step 2510 | avg_loss (last 10 steps): 10.6548
+2025-11-27 06:51:12,731 - INFO - step 2520 | avg_loss (last 10 steps): 9.9797
+2025-11-27 06:51:35,805 - INFO - step 2530 | avg_loss (last 10 steps): 9.2409
+2025-11-27 06:51:58,873 - INFO - step 2540 | avg_loss (last 10 steps): 4.0943
+2025-11-27 06:52:21,970 - INFO - step 2550 | avg_loss (last 10 steps): 13.7079
+2025-11-27 06:52:45,057 - INFO - step 2560 | avg_loss (last 10 steps): 20.5587
+2025-11-27 06:53:08,171 - INFO - step 2570 | avg_loss (last 10 steps): 19.8767
+2025-11-27 06:53:31,247 - INFO - step 2580 | avg_loss (last 10 steps): 7.5936
+2025-11-27 06:53:54,316 - INFO - step 2590 | avg_loss (last 10 steps): 9.0822
+2025-11-27 06:54:17,371 - INFO - step 2600 | avg_loss (last 10 steps): 7.7511
+2025-11-27 06:54:40,426 - INFO - step 2610 | avg_loss (last 10 steps): 17.0711
+2025-11-27 06:55:03,497 - INFO - step 2620 | avg_loss (last 10 steps): 2.5619
+2025-11-27 06:55:26,592 - INFO - step 2630 | avg_loss (last 10 steps): 9.1154
+2025-11-27 06:55:49,633 - INFO - step 2640 | avg_loss (last 10 steps): 7.2575
+2025-11-27 06:56:12,706 - INFO - step 2650 | avg_loss (last 10 steps): 4.1463
+2025-11-27 06:56:35,756 - INFO - step 2660 | avg_loss (last 10 steps): 11.4846
+2025-11-27 06:56:58,826 - INFO - step 2670 | avg_loss (last 10 steps): 4.9232
+2025-11-27 06:57:21,869 - INFO - step 2680 | avg_loss (last 10 steps): 13.6474
+2025-11-27 06:57:44,939 - INFO - step 2690 | avg_loss (last 10 steps): 11.4963
+2025-11-27 06:58:08,016 - INFO - step 2700 | avg_loss (last 10 steps): 10.3245
+2025-11-27 06:58:31,080 - INFO - step 2710 | avg_loss (last 10 steps): 10.5731
+2025-11-27 06:58:54,136 - INFO - step 2720 | avg_loss (last 10 steps): 2.1829
+2025-11-27 06:59:17,224 - INFO - step 2730 | avg_loss (last 10 steps): 11.6307
+2025-11-27 06:59:40,255 - INFO - step 2740 | avg_loss (last 10 steps): 17.2122
+2025-11-27 07:00:03,325 - INFO - step 2750 | avg_loss (last 10 steps): 4.8582
+2025-11-27 07:00:26,421 - INFO - step 2760 | avg_loss (last 10 steps): 11.5992
+2025-11-27 07:00:49,509 - INFO - step 2770 | avg_loss (last 10 steps): 3.9321
+2025-11-27 07:01:12,568 - INFO - step 2780 | avg_loss (last 10 steps): 9.7894
+2025-11-27 07:01:35,660 - INFO - step 2790 | avg_loss (last 10 steps): 12.1787
+2025-11-27 07:01:58,726 - INFO - step 2800 | avg_loss (last 10 steps): 5.7382
+2025-11-27 07:02:21,807 - INFO - step 2810 | avg_loss (last 10 steps): 5.7180
+2025-11-27 07:02:44,870 - INFO - step 2820 | avg_loss (last 10 steps): 12.0390
+2025-11-27 07:03:07,924 - INFO - step 2830 | avg_loss (last 10 steps): 23.7912
+2025-11-27 07:03:30,961 - INFO - step 2840 | avg_loss (last 10 steps): 11.6797
+2025-11-27 07:03:54,005 - INFO - step 2850 | avg_loss (last 10 steps): 7.8037
+2025-11-27 07:04:17,004 - INFO - step 2860 | avg_loss (last 10 steps): 11.1493
+2025-11-27 07:04:40,056 - INFO - step 2870 | avg_loss (last 10 steps): 13.5233
+2025-11-27 07:05:03,079 - INFO - step 2880 | avg_loss (last 10 steps): 3.9511
+2025-11-27 07:05:26,103 - INFO - step 2890 | avg_loss (last 10 steps): 4.5035
+2025-11-27 07:05:49,140 - INFO - step 2900 | avg_loss (last 10 steps): 15.4251
+2025-11-27 07:06:12,196 - INFO - step 2910 | avg_loss (last 10 steps): 5.7951
+2025-11-27 07:06:35,226 - INFO - step 2920 | avg_loss (last 10 steps): 14.5963
+2025-11-27 07:06:58,240 - INFO - step 2930 | avg_loss (last 10 steps): 10.6431
+2025-11-27 07:07:21,291 - INFO - step 2940 | avg_loss (last 10 steps): 9.7859
+2025-11-27 07:07:44,360 - INFO - step 2950 | avg_loss (last 10 steps): 13.1233
+2025-11-27 07:08:07,408 - INFO - step 2960 | avg_loss (last 10 steps): 13.4554
+2025-11-27 07:08:30,505 - INFO - step 2970 | avg_loss (last 10 steps): 15.2644
+2025-11-27 07:08:53,583 - INFO - step 2980 | avg_loss (last 10 steps): 11.7050
+2025-11-27 07:09:16,628 - INFO - step 2990 | avg_loss (last 10 steps): 6.9045
+2025-11-27 07:09:39,648 - INFO - step 3000 | avg_loss (last 10 steps): 9.9035
+2025-11-27 07:10:02,676 - INFO - step 3010 | avg_loss (last 10 steps): 5.8162
+2025-11-27 07:10:25,714 - INFO - step 3020 | avg_loss (last 10 steps): 6.9289
+2025-11-27 07:10:48,765 - INFO - step 3030 | avg_loss (last 10 steps): 6.9861
+2025-11-27 07:11:11,828 - INFO - step 3040 | avg_loss (last 10 steps): 6.0026
+2025-11-27 07:11:34,895 - INFO - step 3050 | avg_loss (last 10 steps): 10.4770
+2025-11-27 07:11:57,941 - INFO - step 3060 | avg_loss (last 10 steps): 10.6092
+2025-11-27 07:12:21,019 - INFO - step 3070 | avg_loss (last 10 steps): 15.5856
+2025-11-27 07:12:44,108 - INFO - step 3080 | avg_loss (last 10 steps): 8.1964
+2025-11-27 07:13:07,175 - INFO - step 3090 | avg_loss (last 10 steps): 8.0113
+2025-11-27 07:13:30,219 - INFO - step 3100 | avg_loss (last 10 steps): 6.5329
+2025-11-27 07:13:53,307 - INFO - step 3110 | avg_loss (last 10 steps): 9.3026
+2025-11-27 07:14:16,384 - INFO - step 3120 | avg_loss (last 10 steps): 11.9181
+2025-11-27 07:14:39,423 - INFO - step 3130 | avg_loss (last 10 steps): 5.6266
+2025-11-27 07:15:02,459 - INFO - step 3140 | avg_loss (last 10 steps): 5.3737
+2025-11-27 07:15:25,489 - INFO - step 3150 | avg_loss (last 10 steps): 6.6502
+2025-11-27 07:15:48,529 - INFO - step 3160 | avg_loss (last 10 steps): 22.2721
+2025-11-27 07:16:11,567 - INFO - step 3170 | avg_loss (last 10 steps): 10.9929
+2025-11-27 07:16:34,550 - INFO - step 3180 | avg_loss (last 10 steps): 10.8711
+2025-11-27 07:16:57,569 - INFO - step 3190 | avg_loss (last 10 steps): 6.6023
+2025-11-27 07:17:20,568 - INFO - step 3200 | avg_loss (last 10 steps): 6.0313
+2025-11-27 07:17:43,619 - INFO - step 3210 | avg_loss (last 10 steps): 19.8938
+2025-11-27 07:18:06,679 - INFO - step 3220 | avg_loss (last 10 steps): 14.3452
+2025-11-27 07:18:29,760 - INFO - step 3230 | avg_loss (last 10 steps): 16.3170
+2025-11-27 07:18:52,840 - INFO - step 3240 | avg_loss (last 10 steps): 9.4671
+2025-11-27 07:19:15,918 - INFO - step 3250 | avg_loss (last 10 steps): 3.5036
+2025-11-27 07:19:38,991 - INFO - step 3260 | avg_loss (last 10 steps): 13.1764
+2025-11-27 07:20:02,073 - INFO - step 3270 | avg_loss (last 10 steps): 3.3177
+2025-11-27 07:20:25,163 - INFO - step 3280 | avg_loss (last 10 steps): 12.1096
+2025-11-27 07:20:48,262 - INFO - step 3290 | avg_loss (last 10 steps): 15.9776
+2025-11-27 07:21:11,306 - INFO - step 3300 | avg_loss (last 10 steps): 12.6155
+2025-11-27 07:21:34,397 - INFO - step 3310 | avg_loss (last 10 steps): 121.3656
+2025-11-27 07:21:57,486 - INFO - step 3320 | avg_loss (last 10 steps): 29.4107
+2025-11-27 07:22:20,595 - INFO - step 3330 | avg_loss (last 10 steps): 35.0693
+2025-11-27 07:22:43,668 - INFO - step 3340 | avg_loss (last 10 steps): 43.9249
+2025-11-27 07:23:06,745 - INFO - step 3350 | avg_loss (last 10 steps): 54.5721
+2025-11-27 07:23:29,814 - INFO - step 3360 | avg_loss (last 10 steps): 56.2233
+2025-11-27 07:23:52,788 - INFO - step 3370 | avg_loss (last 10 steps): 16.1304
+2025-11-27 07:24:15,778 - INFO - step 3380 | avg_loss (last 10 steps): 21.7176
+2025-11-27 07:24:38,849 - INFO - step 3390 | avg_loss (last 10 steps): 20.5223
+2025-11-27 07:25:01,846 - INFO - step 3400 | avg_loss (last 10 steps): 14.6594
+2025-11-27 07:25:24,869 - INFO - step 3410 | avg_loss (last 10 steps): 14.1507
+2025-11-27 07:25:47,827 - INFO - step 3420 | avg_loss (last 10 steps): 27.0885
+2025-11-27 07:26:10,855 - INFO - step 3430 | avg_loss (last 10 steps): 41.1066
+2025-11-27 07:26:33,879 - INFO - step 3440 | avg_loss (last 10 steps): 43.1737
+2025-11-27 07:26:56,897 - INFO - step 3450 | avg_loss (last 10 steps): 10.5130
+2025-11-27 07:27:19,941 - INFO - step 3460 | avg_loss (last 10 steps): 9.5580
+2025-11-27 07:27:42,991 - INFO - step 3470 | avg_loss (last 10 steps): 44.9106
+2025-11-27 07:28:05,966 - INFO - step 3480 | avg_loss (last 10 steps): 8.8456
+2025-11-27 07:28:28,920 - INFO - step 3490 | avg_loss (last 10 steps): 47.1557
+2025-11-27 07:28:51,876 - INFO - step 3500 | avg_loss (last 10 steps): 25.4630
+2025-11-27 07:29:14,827 - INFO - step 3510 | avg_loss (last 10 steps): 10.3771
+2025-11-27 07:29:37,794 - INFO - step 3520 | avg_loss (last 10 steps): 32.5567
+2025-11-27 07:30:00,799 - INFO - step 3530 | avg_loss (last 10 steps): 14.5533
+2025-11-27 07:30:23,815 - INFO - step 3540 | avg_loss (last 10 steps): 19.1726
+2025-11-27 07:30:46,819 - INFO - step 3550 | avg_loss (last 10 steps): 51.3070
+2025-11-27 07:31:09,861 - INFO - step 3560 | avg_loss (last 10 steps): 52.0148
+2025-11-27 07:31:32,893 - INFO - step 3570 | avg_loss (last 10 steps): 20.6198
+2025-11-27 07:31:55,895 - INFO - step 3580 | avg_loss (last 10 steps): 16.1244
+2025-11-27 07:32:18,943 - INFO - step 3590 | avg_loss (last 10 steps): 23.7129
+2025-11-27 07:32:41,964 - INFO - step 3600 | avg_loss (last 10 steps): 18.4481
+2025-11-27 07:35:20,899 - INFO - Test accuracy after epoch 2: 82.00%
+2025-11-27 07:35:20,900 - INFO - Epoch 3/3 -- 450 mini-batches
+2025-11-27 07:35:43,959 - INFO - step 3610 | avg_loss (last 10 steps): 13.5332
+2025-11-27 07:36:06,955 - INFO - step 3620 | avg_loss (last 10 steps): 6.8048
+2025-11-27 07:36:29,953 - INFO - step 3630 | avg_loss (last 10 steps): 23.1949
+2025-11-27 07:36:52,916 - INFO - step 3640 | avg_loss (last 10 steps): 6.0580
+2025-11-27 07:37:15,937 - INFO - step 3650 | avg_loss (last 10 steps): 17.2515
+2025-11-27 07:37:38,968 - INFO - step 3660 | avg_loss (last 10 steps): 11.3651
+2025-11-27 07:38:01,955 - INFO - step 3670 | avg_loss (last 10 steps): 10.9287
+2025-11-27 07:38:24,967 - INFO - step 3680 | avg_loss (last 10 steps): 14.1174
+2025-11-27 07:38:47,981 - INFO - step 3690 | avg_loss (last 10 steps): 8.2381
+2025-11-27 07:39:10,923 - INFO - step 3700 | avg_loss (last 10 steps): 9.8561
+2025-11-27 07:39:33,917 - INFO - step 3710 | avg_loss (last 10 steps): 11.0472
+2025-11-27 07:39:56,916 - INFO - step 3720 | avg_loss (last 10 steps): 16.0621
+2025-11-27 07:40:19,916 - INFO - step 3730 | avg_loss (last 10 steps): 7.1519
+2025-11-27 07:40:42,909 - INFO - step 3740 | avg_loss (last 10 steps): 11.2872
+2025-11-27 07:41:05,954 - INFO - step 3750 | avg_loss (last 10 steps): 23.1241
+2025-11-27 07:41:29,020 - INFO - step 3760 | avg_loss (last 10 steps): 9.7060
+2025-11-27 07:41:52,074 - INFO - step 3770 | avg_loss (last 10 steps): 6.8929
+2025-11-27 07:42:15,094 - INFO - step 3780 | avg_loss (last 10 steps): 19.0021
+2025-11-27 07:42:38,145 - INFO - step 3790 | avg_loss (last 10 steps): 14.3159
+2025-11-27 07:43:01,175 - INFO - step 3800 | avg_loss (last 10 steps): 3.4180
+2025-11-27 07:43:24,223 - INFO - step 3810 | avg_loss (last 10 steps): 5.9038
+2025-11-27 07:43:47,282 - INFO - step 3820 | avg_loss (last 10 steps): 7.6067
+2025-11-27 07:44:10,351 - INFO - step 3830 | avg_loss (last 10 steps): 5.8486
+2025-11-27 07:44:33,375 - INFO - step 3840 | avg_loss (last 10 steps): 4.7958
+2025-11-27 07:44:56,434 - INFO - step 3850 | avg_loss (last 10 steps): 12.9929
+2025-11-27 07:45:19,497 - INFO - step 3860 | avg_loss (last 10 steps): 21.7144
+2025-11-27 07:45:42,556 - INFO - step 3870 | avg_loss (last 10 steps): 5.3747
+2025-11-27 07:46:05,638 - INFO - step 3880 | avg_loss (last 10 steps): 5.2012
+2025-11-27 07:46:28,704 - INFO - step 3890 | avg_loss (last 10 steps): 7.0965
+2025-11-27 07:46:51,779 - INFO - step 3900 | avg_loss (last 10 steps): 8.5427
+2025-11-27 07:47:14,840 - INFO - step 3910 | avg_loss (last 10 steps): 12.3645
+2025-11-27 07:47:37,968 - INFO - step 3920 | avg_loss (last 10 steps): 7.8035
+2025-11-27 07:48:01,065 - INFO - step 3930 | avg_loss (last 10 steps): 14.0970
+2025-11-27 07:48:24,122 - INFO - step 3940 | avg_loss (last 10 steps): 10.1201
+2025-11-27 07:48:47,202 - INFO - step 3950 | avg_loss (last 10 steps): 1.9937
+2025-11-27 07:49:10,252 - INFO - step 3960 | avg_loss (last 10 steps): 4.3478
+2025-11-27 07:49:33,302 - INFO - step 3970 | avg_loss (last 10 steps): 2.7624
+2025-11-27 07:49:56,348 - INFO - step 3980 | avg_loss (last 10 steps): 12.7954
+2025-11-27 07:50:19,408 - INFO - step 3990 | avg_loss (last 10 steps): 13.9916
+2025-11-27 07:50:42,483 - INFO - step 4000 | avg_loss (last 10 steps): 7.9989
+2025-11-27 07:51:05,555 - INFO - step 4010 | avg_loss (last 10 steps): 8.3258
+2025-11-27 07:51:28,637 - INFO - step 4020 | avg_loss (last 10 steps): 11.9849
+2025-11-27 07:51:51,729 - INFO - step 4030 | avg_loss (last 10 steps): 0.5905
+2025-11-27 07:52:14,824 - INFO - step 4040 | avg_loss (last 10 steps): 5.9000
+2025-11-27 07:52:37,948 - INFO - step 4050 | avg_loss (last 10 steps): 2.8488
+2025-11-27 07:53:01,039 - INFO - step 4060 | avg_loss (last 10 steps): 2.6993
+2025-11-27 07:53:24,175 - INFO - step 4070 | avg_loss (last 10 steps): 8.5660
+2025-11-27 07:53:47,290 - INFO - step 4080 | avg_loss (last 10 steps): 18.1670
+2025-11-27 07:54:10,379 - INFO - step 4090 | avg_loss (last 10 steps): 9.5247
+2025-11-27 07:54:33,419 - INFO - step 4100 | avg_loss (last 10 steps): 5.4654
+2025-11-27 07:54:56,469 - INFO - step 4110 | avg_loss (last 10 steps): 2.4729
+2025-11-27 07:55:19,489 - INFO - step 4120 | avg_loss (last 10 steps): 15.1178
+2025-11-27 07:55:42,513 - INFO - step 4130 | avg_loss (last 10 steps): 2.9789
+2025-11-27 07:56:05,568 - INFO - step 4140 | avg_loss (last 10 steps): 11.0569
+2025-11-27 07:56:28,673 - INFO - step 4150 | avg_loss (last 10 steps): 11.2073
+2025-11-27 07:56:51,748 - INFO - step 4160 | avg_loss (last 10 steps): 9.8566
+2025-11-27 07:57:14,831 - INFO - step 4170 | avg_loss (last 10 steps): 4.3566
+2025-11-27 07:57:37,900 - INFO - step 4180 | avg_loss (last 10 steps): 8.3158
+2025-11-27 07:58:00,942 - INFO - step 4190 | avg_loss (last 10 steps): 19.4596
+2025-11-27 07:58:23,989 - INFO - step 4200 | avg_loss (last 10 steps): 8.7162
+2025-11-27 07:58:47,048 - INFO - step 4210 | avg_loss (last 10 steps): 11.1561
+2025-11-27 07:59:10,078 - INFO - step 4220 | avg_loss (last 10 steps): 8.4494
+2025-11-27 07:59:33,162 - INFO - step 4230 | avg_loss (last 10 steps): 10.3232
+2025-11-27 07:59:56,215 - INFO - step 4240 | avg_loss (last 10 steps): 6.4279
+2025-11-27 08:00:19,287 - INFO - step 4250 | avg_loss (last 10 steps): 6.1491
+2025-11-27 08:00:42,354 - INFO - step 4260 | avg_loss (last 10 steps): 13.9452
+2025-11-27 08:01:05,453 - INFO - step 4270 | avg_loss (last 10 steps): 4.6487
+2025-11-27 08:01:28,531 - INFO - step 4280 | avg_loss (last 10 steps): 7.1934
+2025-11-27 08:01:51,619 - INFO - step 4290 | avg_loss (last 10 steps): 5.6512
+2025-11-27 08:02:14,683 - INFO - step 4300 | avg_loss (last 10 steps): 6.0909
+2025-11-27 08:02:37,790 - INFO - step 4310 | avg_loss (last 10 steps): 4.1359
+2025-11-27 08:03:00,884 - INFO - step 4320 | avg_loss (last 10 steps): 3.5941
+2025-11-27 08:03:23,976 - INFO - step 4330 | avg_loss (last 10 steps): 7.6742
+2025-11-27 08:03:47,032 - INFO - step 4340 | avg_loss (last 10 steps): 10.0130
+2025-11-27 08:04:10,134 - INFO - step 4350 | avg_loss (last 10 steps): 8.2529
+2025-11-27 08:04:33,213 - INFO - step 4360 | avg_loss (last 10 steps): 5.6757
+2025-11-27 08:04:56,291 - INFO - step 4370 | avg_loss (last 10 steps): 10.3276
+2025-11-27 08:05:19,343 - INFO - step 4380 | avg_loss (last 10 steps): 12.9437
+2025-11-27 08:05:42,428 - INFO - step 4390 | avg_loss (last 10 steps): 8.7818
+2025-11-27 08:06:05,510 - INFO - step 4400 | avg_loss (last 10 steps): 10.2344
+2025-11-27 08:06:28,623 - INFO - step 4410 | avg_loss (last 10 steps): 19.8572
+2025-11-27 08:06:51,710 - INFO - step 4420 | avg_loss (last 10 steps): 4.2739
+2025-11-27 08:07:14,792 - INFO - step 4430 | avg_loss (last 10 steps): 9.4461
+2025-11-27 08:07:37,853 - INFO - step 4440 | avg_loss (last 10 steps): 9.2204
+2025-11-27 08:08:00,951 - INFO - step 4450 | avg_loss (last 10 steps): 5.9602
+2025-11-27 08:08:24,042 - INFO - step 4460 | avg_loss (last 10 steps): 15.5578
+2025-11-27 08:08:47,134 - INFO - step 4470 | avg_loss (last 10 steps): 1.7900
+2025-11-27 08:09:10,230 - INFO - step 4480 | avg_loss (last 10 steps): 5.3378
+2025-11-27 08:09:33,315 - INFO - step 4490 | avg_loss (last 10 steps): 5.6719
+2025-11-27 08:09:56,390 - INFO - step 4500 | avg_loss (last 10 steps): 8.7521
+2025-11-27 08:10:19,466 - INFO - step 4510 | avg_loss (last 10 steps): 10.1292
+2025-11-27 08:10:42,560 - INFO - step 4520 | avg_loss (last 10 steps): 1.8405
+2025-11-27 08:11:05,659 - INFO - step 4530 | avg_loss (last 10 steps): 5.5839
+2025-11-27 08:11:28,737 - INFO - step 4540 | avg_loss (last 10 steps): 11.2357
+2025-11-27 08:11:51,825 - INFO - step 4550 | avg_loss (last 10 steps): 8.0765
+2025-11-27 08:12:14,881 - INFO - step 4560 | avg_loss (last 10 steps): 8.9368
+2025-11-27 08:12:37,960 - INFO - step 4570 | avg_loss (last 10 steps): 1.9657
+2025-11-27 08:13:01,046 - INFO - step 4580 | avg_loss (last 10 steps): 8.9689
+2025-11-27 08:13:24,134 - INFO - step 4590 | avg_loss (last 10 steps): 3.5419
+2025-11-27 08:13:47,187 - INFO - step 4600 | avg_loss (last 10 steps): 7.8106
+2025-11-27 08:14:10,246 - INFO - step 4610 | avg_loss (last 10 steps): 4.6528
+2025-11-27 08:14:33,333 - INFO - step 4620 | avg_loss (last 10 steps): 9.7259
+2025-11-27 08:14:56,420 - INFO - step 4630 | avg_loss (last 10 steps): 10.0370
+2025-11-27 08:15:19,497 - INFO - step 4640 | avg_loss (last 10 steps): 15.6323
+2025-11-27 08:15:42,555 - INFO - step 4650 | avg_loss (last 10 steps): 10.6206
+2025-11-27 08:16:05,635 - INFO - step 4660 | avg_loss (last 10 steps): 18.6503
+2025-11-27 08:16:28,698 - INFO - step 4670 | avg_loss (last 10 steps): 5.9832
+2025-11-27 08:16:51,752 - INFO - step 4680 | avg_loss (last 10 steps): 1.6318
+2025-11-27 08:17:14,830 - INFO - step 4690 | avg_loss (last 10 steps): 4.5488
+2025-11-27 08:17:37,873 - INFO - step 4700 | avg_loss (last 10 steps): 1.1292
+2025-11-27 08:18:00,927 - INFO - step 4710 | avg_loss (last 10 steps): 8.9727
+2025-11-27 08:18:23,962 - INFO - step 4720 | avg_loss (last 10 steps): 12.4409
+2025-11-27 08:18:47,039 - INFO - step 4730 | avg_loss (last 10 steps): 3.2635
+2025-11-27 08:19:10,114 - INFO - step 4740 | avg_loss (last 10 steps): 10.6391
+2025-11-27 08:19:33,198 - INFO - step 4750 | avg_loss (last 10 steps): 22.0844
+2025-11-27 08:19:56,291 - INFO - step 4760 | avg_loss (last 10 steps): 4.5107
+2025-11-27 08:20:19,395 - INFO - step 4770 | avg_loss (last 10 steps): 7.9719
+2025-11-27 08:20:42,465 - INFO - step 4780 | avg_loss (last 10 steps): 3.2763
+2025-11-27 08:21:05,537 - INFO - step 4790 | avg_loss (last 10 steps): 57.4095
+2025-11-27 08:21:28,552 - INFO - step 4800 | avg_loss (last 10 steps): 15.9128
+2025-11-27 08:21:51,611 - INFO - step 4810 | avg_loss (last 10 steps): 8.0220
+2025-11-27 08:22:14,649 - INFO - step 4820 | avg_loss (last 10 steps): 22.8315
+2025-11-27 08:22:37,681 - INFO - step 4830 | avg_loss (last 10 steps): 32.4963
+2025-11-27 08:23:00,722 - INFO - step 4840 | avg_loss (last 10 steps): 9.9147
+2025-11-27 08:23:23,773 - INFO - step 4850 | avg_loss (last 10 steps): 10.7846
+2025-11-27 08:23:46,792 - INFO - step 4860 | avg_loss (last 10 steps): 3.6234
+2025-11-27 08:24:09,847 - INFO - step 4870 | avg_loss (last 10 steps): 6.4342
+2025-11-27 08:24:32,912 - INFO - step 4880 | avg_loss (last 10 steps): 25.2963
+2025-11-27 08:24:56,018 - INFO - step 4890 | avg_loss (last 10 steps): 7.7994
+2025-11-27 08:25:19,062 - INFO - step 4900 | avg_loss (last 10 steps): 2.9403
+2025-11-27 08:25:42,103 - INFO - step 4910 | avg_loss (last 10 steps): 1.9657
+2025-11-27 08:26:05,126 - INFO - step 4920 | avg_loss (last 10 steps): 3.1514
+2025-11-27 08:26:28,183 - INFO - step 4930 | avg_loss (last 10 steps): 6.3539
+2025-11-27 08:26:51,219 - INFO - step 4940 | avg_loss (last 10 steps): 3.3696
+2025-11-27 08:27:14,310 - INFO - step 4950 | avg_loss (last 10 steps): 16.3498
+2025-11-27 08:27:37,359 - INFO - step 4960 | avg_loss (last 10 steps): 6.3099
+2025-11-27 08:28:00,452 - INFO - step 4970 | avg_loss (last 10 steps): 8.0269
+2025-11-27 08:28:23,526 - INFO - step 4980 | avg_loss (last 10 steps): 7.0402
+2025-11-27 08:28:46,611 - INFO - step 4990 | avg_loss (last 10 steps): 9.3234
+2025-11-27 08:29:09,673 - INFO - step 5000 | avg_loss (last 10 steps): 12.1791
+2025-11-27 08:29:32,727 - INFO - step 5010 | avg_loss (last 10 steps): 8.0061
+2025-11-27 08:29:55,781 - INFO - step 5020 | avg_loss (last 10 steps): 21.2768
+2025-11-27 08:30:18,849 - INFO - step 5030 | avg_loss (last 10 steps): 4.0315
+2025-11-27 08:30:41,913 - INFO - step 5040 | avg_loss (last 10 steps): 9.6315
+2025-11-27 08:31:05,005 - INFO - step 5050 | avg_loss (last 10 steps): 12.8448
+2025-11-27 08:31:28,013 - INFO - step 5060 | avg_loss (last 10 steps): 9.3543
+2025-11-27 08:31:51,080 - INFO - step 5070 | avg_loss (last 10 steps): 11.6307
+2025-11-27 08:32:14,131 - INFO - step 5080 | avg_loss (last 10 steps): 9.8099
+2025-11-27 08:32:37,210 - INFO - step 5090 | avg_loss (last 10 steps): 4.0731
+2025-11-27 08:33:00,254 - INFO - step 5100 | avg_loss (last 10 steps): 8.7299
+2025-11-27 08:33:23,341 - INFO - step 5110 | avg_loss (last 10 steps): 4.4378
+2025-11-27 08:33:46,394 - INFO - step 5120 | avg_loss (last 10 steps): 5.1370
+2025-11-27 08:34:09,438 - INFO - step 5130 | avg_loss (last 10 steps): 8.9283
+2025-11-27 08:34:32,482 - INFO - step 5140 | avg_loss (last 10 steps): 4.4578
+2025-11-27 08:34:55,512 - INFO - step 5150 | avg_loss (last 10 steps): 3.5003
+2025-11-27 08:35:18,537 - INFO - step 5160 | avg_loss (last 10 steps): 14.0401
+2025-11-27 08:35:41,573 - INFO - step 5170 | avg_loss (last 10 steps): 10.6924
+2025-11-27 08:36:04,627 - INFO - step 5180 | avg_loss (last 10 steps): 9.4023
+2025-11-27 08:36:27,694 - INFO - step 5190 | avg_loss (last 10 steps): 9.1279
+2025-11-27 08:36:50,755 - INFO - step 5200 | avg_loss (last 10 steps): 11.5893
+2025-11-27 08:37:13,826 - INFO - step 5210 | avg_loss (last 10 steps): 16.8278
+2025-11-27 08:37:36,870 - INFO - step 5220 | avg_loss (last 10 steps): 7.2466
+2025-11-27 08:37:59,920 - INFO - step 5230 | avg_loss (last 10 steps): 9.9434
+2025-11-27 08:38:22,956 - INFO - step 5240 | avg_loss (last 10 steps): 6.3889
+2025-11-27 08:38:46,020 - INFO - step 5250 | avg_loss (last 10 steps): 10.4114
+2025-11-27 08:39:09,035 - INFO - step 5260 | avg_loss (last 10 steps): 2.9510
+2025-11-27 08:39:32,120 - INFO - step 5270 | avg_loss (last 10 steps): 9.1716
+2025-11-27 08:39:55,162 - INFO - step 5280 | avg_loss (last 10 steps): 7.2243
+2025-11-27 08:40:18,215 - INFO - step 5290 | avg_loss (last 10 steps): 8.3987
+2025-11-27 08:40:41,263 - INFO - step 5300 | avg_loss (last 10 steps): 5.0236
+2025-11-27 08:41:04,349 - INFO - step 5310 | avg_loss (last 10 steps): 6.7029
+2025-11-27 08:41:27,400 - INFO - step 5320 | avg_loss (last 10 steps): 5.9550
+2025-11-27 08:41:50,458 - INFO - step 5330 | avg_loss (last 10 steps): 5.1936
+2025-11-27 08:42:13,529 - INFO - step 5340 | avg_loss (last 10 steps): 15.2623
+2025-11-27 08:42:36,633 - INFO - step 5350 | avg_loss (last 10 steps): 7.1550
+2025-11-27 08:42:59,713 - INFO - step 5360 | avg_loss (last 10 steps): 6.2259
+2025-11-27 08:43:22,771 - INFO - step 5370 | avg_loss (last 10 steps): 3.4316
+2025-11-27 08:43:45,843 - INFO - step 5380 | avg_loss (last 10 steps): 3.9684
+2025-11-27 08:44:08,908 - INFO - step 5390 | avg_loss (last 10 steps): 3.8929
+2025-11-27 08:44:31,975 - INFO - step 5400 | avg_loss (last 10 steps): 2.1723
+2025-11-27 08:47:10,924 - INFO - Test accuracy after epoch 3: 83.00%
+2025-11-27 08:47:10,925 - INFO - Evaluating final model on test split...
+2025-11-27 08:49:50,015 - INFO - Final test accuracy: 83.00% (Δ vs. baseline: +28.50%)
