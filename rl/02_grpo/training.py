@@ -1,13 +1,28 @@
+import logging
+import os
+
 import torch
-from constants import (BATCH_SIZE, DATA_PATH, DEVICE, LOG_INTERVAL, LORA_ALPHA,
-                       LORA_RANK, LR, MAX_LEN, MODEL_NAME, NUM_EPOCHS,
-                       SAVE_INTERVAL, TEST_BATCH_SIZE)
+from constants import (BATCH_SIZE, CHECKPOINT_DIR, DATA_PATH, DEVICE, LOG_FILE,
+                       LOG_INTERVAL, LORA_ALPHA, LORA_RANK, LR, MAX_LEN,
+                       MODEL_NAME, NUM_EPOCHS, SAVE_INTERVAL, TEST_BATCH_SIZE)
 from custom_dataset import GRPODataset
 from grpo_utils import get_answer_log_probs, grpo_loss
 from lora import inject_lora
 from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ],
+)
+logger = logging.getLogger(__name__)
+os.makedirs(CHECKPOINT_DIR, exist_ok=True)
+logger.info("Checkpoints will be written to %s", CHECKPOINT_DIR)
 
 # -----------------------------
 # Setup
@@ -19,6 +34,7 @@ model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
 model = inject_lora(model, LORA_RANK, LORA_ALPHA)
 model.train()
 
+logger.info("Loading dataset from %s", DATA_PATH)
 dataset = GRPODataset(DATA_PATH, tokenizer, MAX_LEN)
 test_size = max(1, int(0.1 * len(dataset)))
 train_size = len(dataset) - test_size
@@ -30,12 +46,12 @@ train_dataset, test_dataset = random_split(
 collate = lambda batch: batch
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate)
 test_loader = DataLoader(test_dataset, batch_size=TEST_BATCH_SIZE, shuffle=False, collate_fn=collate)
+logger.info("Train samples: %d | Test samples: %d", train_size, test_size)
 
 optimizer = torch.optim.AdamW(
     [p for p in model.parameters() if p.requires_grad],
     lr=LR
 )
-
 
 def evaluate_accuracy(model, data_loader):
     """Compute accuracy on held-out data."""
@@ -77,16 +93,22 @@ def evaluate_accuracy(model, data_loader):
 
     return correct / max(total, 1)
 
+
+logger.info("Computing baseline accuracy on test split...")
+baseline_accuracy = evaluate_accuracy(model, test_loader)
+logger.info("Baseline test accuracy: %.2f%%", baseline_accuracy * 100)
+
 # -----------------------------
 # Training
 # -----------------------------
 
 global_step = 0
+logger.info("Starting training for %d epochs", NUM_EPOCHS)
 
 for epoch in range(NUM_EPOCHS):
 
-    print(f"\nEpoch {epoch+1}")
-    for batch in tqdm(train_loader):
+    logger.info("Epoch %d/%d -- %d mini-batches", epoch + 1, NUM_EPOCHS, len(train_loader))
+    for batch in tqdm(train_loader, desc=f"Epoch {epoch+1}", leave=False):
 
         for sample in batch:
             batch_scores = []
@@ -120,12 +142,24 @@ for epoch in range(NUM_EPOCHS):
             global_step += 1
 
             if global_step % LOG_INTERVAL == 0:
-                print(f"step {global_step} | loss: {loss.item()}")
+                logger.info("step %d | loss: %.4f", global_step, loss.item())
 
             if global_step % SAVE_INTERVAL == 0:
-                torch.save(model.state_dict(), f"checkpoints/grpo_step_{global_step}.pt")
+                ckpt_path = f"{CHECKPOINT_DIR}/grpo_step_{global_step}.pt"
+                torch.save(model.state_dict(), ckpt_path)
+                logger.info("Saved checkpoint to %s", ckpt_path)
 
     accuracy = evaluate_accuracy(model, test_loader)
-    print(f"Test accuracy after epoch {epoch+1}: {accuracy * 100:.2f}%")
+    logger.info("Test accuracy after epoch %d: %.2f%%", epoch + 1, accuracy * 100)
 
-torch.save(model.state_dict(), "checkpoints/final_grpo.pt")
+logger.info("Evaluating final model on test split...")
+final_accuracy = evaluate_accuracy(model, test_loader)
+logger.info(
+    "Final test accuracy: %.2f%% (Δ vs. baseline: %+0.2f%%)",
+    final_accuracy * 100,
+    (final_accuracy - baseline_accuracy) * 100,
+)
+
+final_ckpt = f"{CHECKPOINT_DIR}/final_grpo.pt"
+torch.save(model.state_dict(), final_ckpt)
+logger.info("Final model saved to %s", final_ckpt)

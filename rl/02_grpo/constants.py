@@ -1,5 +1,5 @@
 MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"   # change if needed
-DATA_PATH = "../../data/processed/02_grpo/gsm8k_grpo_real.jsonl"
+DATA_PATH = "./gsm8k_grpo_real.jsonl"
 
 DEVICE = "cuda"
 
@@ -14,3 +14,5 @@ LORA_ALPHA = 32
 LOG_INTERVAL = 10
 SAVE_INTERVAL = 200
 TEST_BATCH_SIZE = 8
+CHECKPOINT_DIR = "checkpoints"
+LOG_FILE = "grpo_training.log"
