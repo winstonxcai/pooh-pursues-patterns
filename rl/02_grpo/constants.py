@@ -1,0 +1,16 @@
+MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"   # change if needed
+DATA_PATH = "../../data/processed/02_grpo/gsm8k_grpo_real.jsonl"
+
+DEVICE = "cuda"
+
+BATCH_SIZE = 1         # 1 prompt = 4 candidates
+NUM_EPOCHS = 3
+LR = 3e-4
+MAX_LEN = 512
+
+LORA_RANK = 8
+LORA_ALPHA = 32
+
+LOG_INTERVAL = 10
+SAVE_INTERVAL = 200
+TEST_BATCH_SIZE = 8
