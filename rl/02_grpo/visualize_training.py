@@ -7,6 +7,7 @@ import re
 import sys
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def parse_log_file(log_path):
@@ -29,12 +30,14 @@ def parse_log_file(log_path):
     return steps, losses
 
 def plot_loss(steps, losses, output_path=None):
-    """Plot steps vs loss."""
+    """Plot steps vs log loss."""
+    log_losses = np.log(np.array(losses) + 1e-8)  # Add small epsilon to avoid log(0)
+    
     plt.figure(figsize=(12, 6))
-    plt.plot(steps, losses, linewidth=1.5, alpha=0.7)
+    plt.plot(steps, log_losses, linewidth=1.5, alpha=0.7)
     plt.xlabel('Step', fontsize=12)
-    plt.ylabel('Average Loss', fontsize=12)
-    plt.title('Training Loss Over Time', fontsize=14, fontweight='bold')
+    plt.ylabel('Log Average Loss', fontsize=12)
+    plt.title('Training Log Loss Over Time', fontsize=14, fontweight='bold')
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     
@@ -61,8 +64,9 @@ def main():
         print(f"Parsed {len(steps)} data points")
         print(f"Step range: {min(steps)} - {max(steps)}")
         print(f"Loss range: {min(losses):.4f} - {max(losses):.4f}")
+        print(f"Log loss range: {np.log(min(losses) + 1e-8):.4f} - {np.log(max(losses) + 1e-8):.4f}")
         
-        output_path = log_file.replace('.log', '_loss_plot.png')
+        output_path = log_file.replace('.log', '_log_loss_plot.png')
         plot_loss(steps, losses, output_path)
         
     except FileNotFoundError:
