@@ -29,6 +29,10 @@ logger.info("Checkpoints will be written to %s", CHECKPOINT_DIR)
 # -----------------------------
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.pad_token_id = tokenizer.eos_token_id
+    logger.info("Tokenizer lacked pad token; set to eos_token.")
 model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
 
 model = inject_lora(model, LORA_RANK, LORA_ALPHA)
