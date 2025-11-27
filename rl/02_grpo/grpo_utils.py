@@ -28,9 +28,11 @@ def get_answer_log_probs(logits, labels):
     """
     log_probs = F.log_softmax(logits, dim=-1)
 
-    next_token_log_probs = log_probs.gather(dim=-1, index=labels.unsqueeze(-1)).squeeze(-1)
-
     mask = labels != -100
+    safe_labels = labels.clone()
+    safe_labels[~mask] = 0  # prevent gather from indexing -100
+
+    next_token_log_probs = log_probs.gather(dim=-1, index=safe_labels.unsqueeze(-1)).squeeze(-1)
 
     return (next_token_log_probs * mask).sum(dim=-1)
 
