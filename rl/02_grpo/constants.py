@@ -4,7 +4,7 @@ MAX_SAMPLES = 2000  # set to int to use subset
 
 DEVICE = "cuda"
 
-BATCH_SIZE = 1         # 1 prompt = 4 candidates
+BATCH_SIZE = 4         # 1 prompt = 4 candidates
 NUM_EPOCHS = 3
 LR = 3e-4
 MAX_LEN = 512
