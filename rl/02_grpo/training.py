@@ -4,7 +4,8 @@ import os
 import torch
 from constants import (BATCH_SIZE, CHECKPOINT_DIR, DATA_PATH, DEVICE, LOG_FILE,
                        LOG_INTERVAL, LORA_ALPHA, LORA_RANK, LR, MAX_LEN,
-                       MODEL_NAME, NUM_EPOCHS, SAVE_INTERVAL, TEST_BATCH_SIZE)
+                       MAX_SAMPLES, MODEL_NAME, NUM_EPOCHS, SAVE_INTERVAL,
+                       TEST_BATCH_SIZE)
 from custom_dataset import GRPODataset
 from grpo_utils import get_answer_log_probs, grpo_loss
 from lora import inject_lora
@@ -40,6 +41,15 @@ model.train()
 
 logger.info("Loading dataset from %s", DATA_PATH)
 dataset = GRPODataset(DATA_PATH, tokenizer, MAX_LEN)
+
+if MAX_SAMPLES is not None:
+    original_len = len(dataset)
+    subset_len = min(MAX_SAMPLES, original_len)
+    generator = torch.Generator().manual_seed(42)
+    subset_indices = torch.randperm(original_len, generator=generator)[:subset_len].tolist()
+    dataset = torch.utils.data.Subset(dataset, subset_indices)
+    logger.info("Using subset: %d/%d samples", subset_len, original_len)
+
 test_size = max(1, int(0.1 * len(dataset)))
 train_size = len(dataset) - test_size
 train_dataset, test_dataset = random_split(
@@ -107,6 +117,8 @@ logger.info("Baseline test accuracy: %.2f%%", baseline_accuracy * 100)
 # -----------------------------
 
 global_step = 0
+running_loss = 0.0
+running_count = 0
 logger.info("Starting training for %d epochs", NUM_EPOCHS)
 
 for epoch in range(NUM_EPOCHS):
@@ -144,9 +156,14 @@ for epoch in range(NUM_EPOCHS):
             optimizer.step()
 
             global_step += 1
+            running_loss += loss.item()
+            running_count += 1
 
             if global_step % LOG_INTERVAL == 0:
-                logger.info("step %d | loss: %.4f", global_step, loss.item())
+                avg_loss = running_loss / max(running_count, 1)
+                logger.info("step %d | avg_loss (last %d steps): %.4f", global_step, running_count, avg_loss)
+                running_loss = 0.0
+                running_count = 0
 
             if global_step % SAVE_INTERVAL == 0:
                 ckpt_path = f"{CHECKPOINT_DIR}/grpo_step_{global_step}.pt"

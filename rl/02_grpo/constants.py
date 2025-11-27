@@ -1,5 +1,6 @@
 MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"   # change if needed
 DATA_PATH = "./gsm8k_grpo_real.jsonl"
+MAX_SAMPLES = 2000  # set to int to use subset
 
 DEVICE = "cuda"
 
