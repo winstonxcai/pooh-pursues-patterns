@@ -1,11 +1,9 @@
 import logging
-import os
 
 import torch
-from constants import (BATCH_SIZE, CHECKPOINT_DIR, DATA_PATH, DEVICE, LOG_FILE,
-                       LOG_INTERVAL, LORA_ALPHA, LORA_RANK, LR, MAX_LEN,
-                       MAX_SAMPLES, MODEL_NAME, NUM_EPOCHS, SAVE_INTERVAL,
-                       TEST_BATCH_SIZE)
+from constants import (BATCH_SIZE, DATA_PATH, DEVICE, LOG_FILE, LOG_INTERVAL,
+                       LORA_ALPHA, LORA_RANK, LR, MAX_LEN, MAX_SAMPLES,
+                       MODEL_NAME, NUM_EPOCHS, TEST_BATCH_SIZE)
 from custom_dataset import GRPODataset
 from grpo_utils import get_answer_log_probs, grpo_loss
 from lora import inject_lora
@@ -22,8 +20,6 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger(__name__)
-os.makedirs(CHECKPOINT_DIR, exist_ok=True)
-logger.info("Checkpoints will be written to %s", CHECKPOINT_DIR)
 
 # -----------------------------
 # Setup
@@ -165,11 +161,6 @@ for epoch in range(NUM_EPOCHS):
                 running_loss = 0.0
                 running_count = 0
 
-            if global_step % SAVE_INTERVAL == 0:
-                ckpt_path = f"{CHECKPOINT_DIR}/grpo_step_{global_step}.pt"
-                torch.save(model.state_dict(), ckpt_path)
-                logger.info("Saved checkpoint to %s", ckpt_path)
-
     accuracy = evaluate_accuracy(model, test_loader)
     logger.info("Test accuracy after epoch %d: %.2f%%", epoch + 1, accuracy * 100)
 
@@ -181,6 +172,3 @@ logger.info(
     (final_accuracy - baseline_accuracy) * 100,
 )
 
-final_ckpt = f"{CHECKPOINT_DIR}/final_grpo.pt"
-torch.save(model.state_dict(), final_ckpt)
-logger.info("Final model saved to %s", final_ckpt)

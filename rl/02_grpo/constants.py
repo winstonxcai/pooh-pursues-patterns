@@ -13,7 +13,5 @@ LORA_RANK = 8
 LORA_ALPHA = 32
 
 LOG_INTERVAL = 10
-SAVE_INTERVAL = 200
 TEST_BATCH_SIZE = 8
-CHECKPOINT_DIR = "checkpoints"
 LOG_FILE = "grpo_training.log"
