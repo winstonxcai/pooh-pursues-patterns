@@ -107,7 +107,7 @@ optimizer = torch.optim.AdamW(
 
 global_step = 0
 
-    for epoch in range(NUM_EPOCHS):
+for epoch in range(NUM_EPOCHS):
     print(f"\n====== Epoch {epoch+1}/{NUM_EPOCHS} ======")
 
     for batch in tqdm(train_loader):
