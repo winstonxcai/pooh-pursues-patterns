@@ -16,6 +16,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 ############################################################
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.pad_token_id = tokenizer.eos_token_id
 
 policy_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
 ref_model     = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)

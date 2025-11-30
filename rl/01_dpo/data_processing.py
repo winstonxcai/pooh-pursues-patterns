@@ -43,7 +43,8 @@ def main():
                     continue
                 
                 rejected = row[f"answer{i}"]
-                prompt = PROMPT_TEMPLATE.format(context=context, question=question, answer=chosen)
+                # Prompt should not include the answer - it will be concatenated in the dataset
+                prompt = PROMPT_TEMPLATE.format(context=context, question=question, answer="")
                 pair = build_pair(prompt, chosen, rejected)
                 f.write(json.dumps(pair) + "\n")
 
