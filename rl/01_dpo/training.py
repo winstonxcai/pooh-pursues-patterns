@@ -110,15 +110,15 @@ optimizer = torch.optim.AdamW(
 
 global_step = 0
 
-    for epoch in range(NUM_EPOCHS):
+for epoch in range(NUM_EPOCHS):
     print(f"\n====== Epoch {epoch+1}/{NUM_EPOCHS} ======")
 
     for batch in tqdm(train_loader):
 
-            chosen_ids = batch["chosen_ids"].to(DEVICE)
-            chosen_mask = batch["chosen_mask"].to(DEVICE)
-            rejected_ids = batch["rejected_ids"].to(DEVICE)
-            rejected_mask = batch["rejected_mask"].to(DEVICE)
+        chosen_ids = batch["chosen_ids"].to(DEVICE)
+        chosen_mask = batch["chosen_mask"].to(DEVICE)
+        rejected_ids = batch["rejected_ids"].to(DEVICE)
+        rejected_mask = batch["rejected_mask"].to(DEVICE)
 
         #############################
         # 1️⃣ Policy (LoRA model) forward
@@ -130,7 +130,7 @@ global_step = 0
         #############################
         # 2️⃣ Reference (frozen) forward
         #############################
-                with torch.no_grad():
+        with torch.no_grad():
             ref_chosen = sequence_logprobs(ref_model, chosen_ids,   chosen_mask)
             ref_reject = sequence_logprobs(ref_model, rejected_ids, rejected_mask)
 
@@ -157,7 +157,7 @@ global_step = 0
             policy_out_ch = policy_model(input_ids=chosen_ids, attention_mask=chosen_mask)
             policy_out_rj = policy_model(input_ids=rejected_ids, attention_mask=rejected_mask)
             
-                with torch.no_grad():
+            with torch.no_grad():
                 ref_out_ch = ref_model(input_ids=chosen_ids, attention_mask=chosen_mask)
                 ref_out_rj = ref_model(input_ids=rejected_ids, attention_mask=rejected_mask)
             
