@@ -1,8 +1,10 @@
 import torch
 
 MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"
-DATASET_NAME = "Anthropic/hh-rlhf"
+DATASET_NAME = "allenai/cosmos_qa"
 NUM_SAMPLES = 3000
+PROMPT_TEMPLATE = "Context: {context}\n\nQuestion: {question}\n\n\n\nAssistant: {answer}"
+LOG_FILE = "dpo_training.log"
 SPLIT_RATIO = 0.9
 R = 32
 ALPHA = 32

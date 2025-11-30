@@ -1,77 +1,31 @@
+import logging
 import random
-from functools import partial
 
-import torch
 import numpy as np
-from constants import (ALPHA, BATCH_SIZE, BETA, DATASET_NAME, DEVICE, GRAD_ACCUM_STEPS,
-                       LEARNING_RATE, LOGGING_INTERVAL, MAX_SEQ_LEN, MODEL_NAME,
-                       NUM_EPOCHS, NUM_SAMPLES, SEED, SPLIT_RATIO, WARMUP_RATIO, R)
-from datasets import load_dataset as hf_load_dataset
-from dpo_utils import dpo_loss, kl_divergence, preference_accuracy, sequence_logprobs
+import torch
+from constants import (ALPHA, BATCH_SIZE, BETA, DEVICE, GRAD_ACCUM_STEPS,
+                       LEARNING_RATE, LOG_FILE, LOGGING_INTERVAL, MAX_SEQ_LEN,
+                       MODEL_NAME, NUM_EPOCHS, NUM_SAMPLES, PROMPT_TEMPLATE,
+                       SEED, SPLIT_RATIO, WARMUP_RATIO, R)
+from custom_dataset import CosmosQADataset
+from dpo_utils import (dpo_loss, kl_divergence, preference_accuracy,
+                       sequence_logprobs)
 from lora import inject_lora
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 from tqdm.auto import tqdm
 from transformers import (AutoModelForCausalLM, AutoTokenizer,
                           get_linear_schedule_with_warmup)
 
-
-def _build_labels(input_ids: torch.Tensor, pad_token_id: int) -> torch.Tensor:
-    """
-    Clone the token ids and replace padding positions with -100
-    so the loss ignores them.
-    """
-    labels = input_ids.clone()
-    labels[labels == pad_token_id] = -100
-    return labels
-
-
-def tokenize(example, tokenizer):
-    """
-    Tokenize the example.
-    Format:
-    {
-        "chosen": ...
-        "rejected": ...
-    }
-
-    Args:
-        example: The example to tokenize.
-
-    Returns:
-        The tokenized example.
-    """
-    chosen_tokens = tokenizer(
-        example["chosen"],
-        return_tensors="pt",
-        padding="max_length",
-        truncation=True,
-        max_length=MAX_SEQ_LEN,
-    )
-    rejected_tokens = tokenizer(
-        example["rejected"],
-        return_tensors="pt",
-        padding="max_length",
-        truncation=True,
-        max_length=MAX_SEQ_LEN,
-    )
-
-    chosen_ids = chosen_tokens.input_ids.squeeze(0)
-    rejected_ids = rejected_tokens.input_ids.squeeze(0)
-
-    chosen_mask = chosen_tokens.attention_mask.squeeze(0)
-    rejected_mask = rejected_tokens.attention_mask.squeeze(0)
-
-    chosen_labels = _build_labels(chosen_ids, tokenizer.pad_token_id)
-    rejected_labels = _build_labels(rejected_ids, tokenizer.pad_token_id)
-
-    return {
-        "chosen_ids": chosen_ids.tolist(),
-        "chosen_mask": chosen_mask.tolist(),
-        "chosen_labels": chosen_labels.tolist(),
-        "rejected_ids": rejected_ids.tolist(),
-        "rejected_mask": rejected_mask.tolist(),
-        "rejected_labels": rejected_labels.tolist(),
-    }
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ],
+)
+logger = logging.getLogger(__name__)
 
 
 def evaluate(policy_model, reference_model, data_loader):
@@ -146,42 +100,45 @@ def main():
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(SEED)
 
+    logger.info("Loading tokenizer and model: %s", MODEL_NAME)
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+        logger.info("Tokenizer lacked pad token; set to eos_token.")
 
+    logger.info("Loading reference model...")
     reference_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
     reference_model.eval()
     for param in reference_model.parameters():
         param.requires_grad = False
 
+    logger.info("Loading and setting up policy model...")
     current_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
     current_model.gradient_checkpointing_enable()
     current_model.config.use_cache = False  # save memory during training
     current_model = inject_lora(current_model, R, ALPHA)
 
-    full_dataset = hf_load_dataset(DATASET_NAME, split="train")
-    total_samples = min(NUM_SAMPLES, len(full_dataset)) if NUM_SAMPLES else len(full_dataset)
-    full_dataset = full_dataset.select(range(total_samples))
-
-    split_index = int(total_samples * SPLIT_RATIO)
-    train_dataset = full_dataset.select(range(split_index))
-    val_dataset = full_dataset.select(range(split_index, total_samples))
-
-    tokenize_fn = partial(tokenize, tokenizer=tokenizer)
-    train_dataset = train_dataset.map(tokenize_fn, remove_columns=train_dataset.column_names)
-    val_dataset = val_dataset.map(tokenize_fn, remove_columns=val_dataset.column_names)
-
-    tensor_columns = [
-        "chosen_ids",
-        "chosen_mask",
-        "chosen_labels",
-        "rejected_ids",
-        "rejected_mask",
-        "rejected_labels",
-    ]
-    train_dataset.set_format(type="torch", columns=tensor_columns)
-    val_dataset.set_format(type="torch", columns=tensor_columns)
+    logger.info("Loading Cosmos QA dataset...")
+    full_dataset = CosmosQADataset(
+        tokenizer=tokenizer,
+        max_len=MAX_SEQ_LEN,
+        prompt_template=PROMPT_TEMPLATE,
+        num_samples=NUM_SAMPLES,
+        seed=SEED
+    )
+    
+    total_samples = len(full_dataset)
+    test_size = max(1, int((1 - SPLIT_RATIO) * total_samples))
+    train_size = total_samples - test_size
+    
+    train_dataset, val_dataset = random_split(
+        full_dataset,
+        [train_size, test_size],
+        generator=torch.Generator().manual_seed(SEED),
+    )
+    
+    logger.info("Train samples: %d | Val samples: %d", train_size, test_size)
 
     train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
@@ -195,6 +152,9 @@ def main():
         num_training_steps=total_optimizer_steps,
     )
 
+    logger.info("Starting training for %d epochs", NUM_EPOCHS)
+    logger.info("Total optimizer steps: %d (warmup: %d)", total_optimizer_steps, warmup_steps)
+
     steps = 0  # micro steps
     optimizer_steps = 0
     optimizer.zero_grad(set_to_none=True)
@@ -203,6 +163,7 @@ def main():
     amp_dtype = torch.bfloat16 if (amp_device == "cuda" and torch.cuda.is_bf16_supported()) else torch.float16
 
     for epoch in range(NUM_EPOCHS):
+        logger.info("Epoch %d/%d -- %d mini-batches", epoch + 1, NUM_EPOCHS, len(train_loader))
         train_iterator = tqdm(
             train_loader,
             desc=f"Epoch {epoch + 1}/{NUM_EPOCHS}",
@@ -270,17 +231,19 @@ def main():
                 train_iterator.set_postfix(
                     {"kl": f"{kl_div.item():.4f}", "loss": f"{loss_to_log.item():.4f}", "pref_acc": f"{pref_acc.item():.3f}"}
                 )
-                print(
-                    f"Step {steps}: KL Div: {kl_div.item():.4f}, Loss: {loss_to_log.item():.4f}, Pref Acc: {pref_acc.item():.3f}"
+                logger.info(
+                    "Step %d: KL Div: %.4f, Loss: %.4f, Pref Acc: %.3f",
+                    steps, kl_div.item(), loss_to_log.item(), pref_acc.item()
                 )
             steps += 1
 
         val_metrics = evaluate(current_model, reference_model, val_loader)
-        print(
-            f"Epoch {epoch + 1}/{NUM_EPOCHS} - "
-            f"Val DPO Loss: {val_metrics['dpo_loss']:.4f}, "
-            f"Val Pref Acc: {val_metrics['preference_accuracy']:.4f}, "
-            f"Val CE: {val_metrics['cross_entropy']:.4f}"
+        logger.info(
+            "Epoch %d/%d - Val DPO Loss: %.4f, Val Pref Acc: %.4f, Val CE: %.4f",
+            epoch + 1, NUM_EPOCHS,
+            val_metrics['dpo_loss'],
+            val_metrics['preference_accuracy'],
+            val_metrics['cross_entropy']
         )
 
 

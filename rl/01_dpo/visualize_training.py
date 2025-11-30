@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""
+Plot training metrics from DPO training log file.
+"""
+
+import re
+import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def parse_log_file(log_path):
+    """Extract (step, loss, kl_div, pref_acc) tuples from log file."""
+    steps = []
+    losses = []
+    kl_divs = []
+    pref_accs = []
+    
+    # Pattern to match: "Step 100: KL Div: 0.8652, Loss: 0.6932, Pref Acc: 0.750"
+    pattern = r'Step (\d+): KL Div: ([\d.]+), Loss: ([\d.]+), Pref Acc: ([\d.]+)'
+    
+    with open(log_path, 'r') as f:
+        for line in f:
+            match = re.search(pattern, line)
+            if match:
+                step = int(match.group(1))
+                kl_div = float(match.group(2))
+                loss = float(match.group(3))
+                pref_acc = float(match.group(4))
+                steps.append(step)
+                kl_divs.append(kl_div)
+                losses.append(loss)
+                pref_accs.append(pref_acc)
+    
+    return steps, losses, kl_divs, pref_accs
+
+
+def plot_metrics(steps, losses, kl_divs, pref_accs, output_dir=None):
+    """Plot loss, KL divergence, and preference accuracy over time."""
+    
+    # Create figure with 3 subplots
+    fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+    
+    # Plot 1: Loss (log scale)
+    log_losses = np.log(np.array(losses) + 1e-8)
+    axes[0].plot(steps, log_losses, linewidth=1.5, alpha=0.7, color='blue')
+    axes[0].set_xlabel('Step', fontsize=12)
+    axes[0].set_ylabel('Log Loss', fontsize=12)
+    axes[0].set_title('Training Log Loss Over Time', fontsize=14, fontweight='bold')
+    axes[0].grid(True, alpha=0.3)
+    
+    # Plot 2: KL Divergence
+    axes[1].plot(steps, kl_divs, linewidth=1.5, alpha=0.7, color='green')
+    axes[1].set_xlabel('Step', fontsize=12)
+    axes[1].set_ylabel('KL Divergence', fontsize=12)
+    axes[1].set_title('KL Divergence Over Time', fontsize=14, fontweight='bold')
+    axes[1].grid(True, alpha=0.3)
+    
+    # Plot 3: Preference Accuracy
+    axes[2].plot(steps, pref_accs, linewidth=1.5, alpha=0.7, color='red')
+    axes[2].set_xlabel('Step', fontsize=12)
+    axes[2].set_ylabel('Preference Accuracy', fontsize=12)
+    axes[2].set_title('Preference Accuracy Over Time', fontsize=14, fontweight='bold')
+    axes[2].grid(True, alpha=0.3)
+    axes[2].set_ylim([0, 1])  # Accuracy is between 0 and 1
+    
+    plt.tight_layout()
+    
+    if output_dir:
+        output_path = f"{output_dir}/dpo_training_metrics.png"
+        plt.savefig(output_path, dpi=150, bbox_inches='tight')
+        print(f"Plot saved to {output_path}")
+    else:
+        plt.show()
+
+
+def main():
+    if len(sys.argv) < 2:
+        log_file = "dpo_training.log"
+        print(f"No log file specified, using default: {log_file}")
+    else:
+        log_file = sys.argv[1]
+    
+    try:
+        steps, losses, kl_divs, pref_accs = parse_log_file(log_file)
+        
+        if not steps:
+            print(f"No training data found in {log_file}")
+            return
+        
+        print(f"Parsed {len(steps)} data points")
+        print(f"Step range: {min(steps)} - {max(steps)}")
+        print(f"Loss range: {min(losses):.4f} - {max(losses):.4f}")
+        print(f"KL Div range: {min(kl_divs):.4f} - {max(kl_divs):.4f}")
+        print(f"Pref Acc range: {min(pref_accs):.4f} - {max(pref_accs):.4f}")
+        
+        # Use log file directory as output directory
+        import os
+        output_dir = os.path.dirname(log_file) if os.path.dirname(log_file) else "."
+        plot_metrics(steps, losses, kl_divs, pref_accs, output_dir)
+        
+    except FileNotFoundError:
+        print(f"Error: Log file '{log_file}' not found")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
