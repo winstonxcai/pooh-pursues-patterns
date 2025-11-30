@@ -38,8 +38,8 @@ policy_model.train()
 full_dataset = CosmosQADataset(DATA_SAVE_PATH, tokenizer, MAX_SEQ_LEN)
 
 # 90% train, 10% test split
-test_size = int(0.10 * len(full_dataset))
-train_size = len(full_dataset) - test_size
+test_size = int(0.10 * NUM_SAMPLES)
+train_size = NUM_SAMPLES - test_size
 
 train_dataset, test_dataset = random_split(
     full_dataset, 
