@@ -28,11 +28,24 @@ def main():
     data = load_dataset(DATASET_NAME, split="train", trust_remote_code=True)
 
     with open(DATA_SAVE_PATH, "w") as f:
+        skipped_count = 0
         for row in tqdm(data, desc="Processing dataset"):
 
             context = row["context"]
             question = row["question"]
             label = row["label"]  # 0-3, index of correct answer
+
+            # Check if any answer contains "None of the above" - skip this question if so
+            has_none_of_above = False
+            for i in range(4):
+                answer = row[f"answer{i}"].lower().strip()
+                if "none of the above" in answer:
+                    has_none_of_above = True
+                    break
+            
+            if has_none_of_above:
+                skipped_count += 1
+                continue
 
             # Get the correct answer
             chosen = row[f"answer{label}"]
@@ -48,7 +61,8 @@ def main():
                 pair = build_pair(prompt, chosen, rejected)
                 f.write(json.dumps(pair) + "\n")
 
-    print("Saved DPO dataset to", DATA_SAVE_PATH)
+    print(f"Saved DPO dataset to {DATA_SAVE_PATH}")
+    print(f"Skipped {skipped_count} questions containing 'None of the above' answers")
 
 if __name__ == "__main__":
     main()

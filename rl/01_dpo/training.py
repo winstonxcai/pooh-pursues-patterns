@@ -153,11 +153,10 @@ for epoch in range(NUM_EPOCHS):
         #############################
         if global_step % LOGGING_INTERVAL == 0:
             # KL Divergence (only computed during logging to reduce overhead)
-            # Forward passes for logits (only when logging)
-            policy_out_ch = policy_model(input_ids=chosen_ids, attention_mask=chosen_mask)
-            policy_out_rj = policy_model(input_ids=rejected_ids, attention_mask=rejected_mask)
-            
+            # Forward passes for logits (only when logging) - no_grad to avoid memory accumulation
             with torch.no_grad():
+                policy_out_ch = policy_model(input_ids=chosen_ids, attention_mask=chosen_mask)
+                policy_out_rj = policy_model(input_ids=rejected_ids, attention_mask=rejected_mask)
                 ref_out_ch = ref_model(input_ids=chosen_ids, attention_mask=chosen_mask)
                 ref_out_rj = ref_model(input_ids=rejected_ids, attention_mask=rejected_mask)
             
