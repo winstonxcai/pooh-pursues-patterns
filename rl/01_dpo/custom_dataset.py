@@ -1,4 +1,5 @@
 import json
+import random
 
 import torch
 from torch.utils.data import Dataset
@@ -7,7 +8,7 @@ from torch.utils.data import Dataset
 class CosmosQADataset(Dataset):
     """Dataset for Cosmos QA training."""
 
-    def __init__(self, path, tokenizer, max_len):
+    def __init__(self, path, tokenizer, max_len, num_samples):
         """
         Initialize the Cosmos QA dataset.
 
@@ -15,10 +16,13 @@ class CosmosQADataset(Dataset):
             path: Path to the dataset file
             tokenizer: Tokenizer to use for encoding
             max_len: Maximum sequence length
+            num_samples: Number of samples to use
         """
-        self.data = [json.loads(l) for l in open(path)]
+        # randomly sample num_samples from the dataset
+        self.data = random.sample([json.loads(l) for l in open(path)], num_samples)
         self.tokenizer = tokenizer
         self.max_len = max_len
+        self.num_samples = num_samples
         
     def tokenize(self, text):
         """
