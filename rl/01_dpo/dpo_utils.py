@@ -9,8 +9,7 @@ def sequence_logprobs(model, input_ids, attention_mask, labels=None):
     ignores positions where labels == -100.
 
     Returns:
-        seq_logprobs: (batch_size,)
-        token_counts: (batch_size,) number of tokens contributing to the logprob
+        seq_logprobs: (batch_size,) summed log-probabilities for each sequence
     """
     if labels is None:
         labels = input_ids
@@ -29,9 +28,8 @@ def sequence_logprobs(model, input_ids, attention_mask, labels=None):
     token_logprobs = token_logprobs * valid_mask_f
 
     seq_logprobs = token_logprobs.sum(dim=-1)
-    token_counts = valid_mask_f.sum(dim=-1).clamp_min(1)
 
-    return seq_logprobs, token_counts
+    return seq_logprobs
 
 
 def dpo_loss(

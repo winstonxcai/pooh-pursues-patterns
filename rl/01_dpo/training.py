@@ -67,15 +67,15 @@ def evaluate_accuracy(model, ref_model, loader):
     ref_model.eval()
 
     with torch.no_grad():
-        for batch in loader:
+        for batch in tqdm(loader, desc="Evaluating accuracy"):
 
             chosen_ids = batch["chosen_ids"].to(DEVICE)
             chosen_mask = batch["chosen_mask"].to(DEVICE)
             rejected_ids = batch["rejected_ids"].to(DEVICE)
             rejected_mask = batch["rejected_mask"].to(DEVICE)
 
-            p_chosen, _ = sequence_logprobs(model, chosen_ids, chosen_mask)
-            p_reject, _ = sequence_logprobs(model, rejected_ids, rejected_mask)
+            p_chosen = sequence_logprobs(model, chosen_ids, chosen_mask)
+            p_reject = sequence_logprobs(model, rejected_ids, rejected_mask)
 
             # A correct preference is p(chosen) > p(rejected)
             correct += (p_chosen > p_reject).sum().item()
@@ -124,8 +124,8 @@ for epoch in range(NUM_EPOCHS):
         # 1️⃣ Policy (LoRA model) forward
         #############################
         # log-prob scores for the DPO objective
-        policy_chosen  = sequence_logprobs(policy_model, chosen_ids,   chosen_mask)
-        policy_reject  = sequence_logprobs(policy_model, rejected_ids, rejected_mask)
+        policy_chosen = sequence_logprobs(policy_model, chosen_ids,   chosen_mask)
+        policy_reject = sequence_logprobs(policy_model, rejected_ids, rejected_mask)
 
         #############################
         # 2️⃣ Reference (frozen) forward
