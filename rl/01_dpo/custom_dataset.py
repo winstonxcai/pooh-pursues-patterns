@@ -24,7 +24,7 @@ class CosmosQADataset(Dataset):
         self.prompt_template = prompt_template
         
         # Load cosmos_qa dataset
-        dataset = load_dataset("allenai/cosmos_qa", split="train")
+        dataset = load_dataset("allenai/cosmos_qa", split="train", trust_remote_code=True)
         
         # Limit samples if specified
         if num_samples is not None:
