@@ -48,41 +48,20 @@ def dpo_loss(
     delta = (policy_chosen_logp - policy_rejected_logp) - (reference_chosen_logp - reference_rejected_logp)
     return -torch.log(torch.sigmoid(beta * delta)).mean()
 
-
-def preference_accuracy(policy_chosen_logp: torch.Tensor, policy_rejected_logp: torch.Tensor) -> torch.Tensor:
-    """Compute preference accuracy for a batch."""
-    return (policy_chosen_logp > policy_rejected_logp).float().mean()
-
-
-def kl_divergence(current_model, reference_model, batch):
+def kl_divergence(policy_logits, ref_logits, mask):
     """
-    Compute the average KL divergence between current and reference models
-    over both chosen and rejected sequences.
+    policy_logits: (B, T, V)
+    ref_logits:    (B, T, V)
+    mask:          (B, T)
+    returns: scalar KL
     """
-    def _kl(ids, mask):
-        current_logits = current_model(ids, attention_mask=mask).logits
-        reference_logits = reference_model(ids, attention_mask=mask).logits
 
-        current_log_probs = F.log_softmax(current_logits, dim=-1)
-        reference_probs = F.softmax(reference_logits, dim=-1)
+    log_p = F.log_softmax(policy_logits, dim=-1)    # (B, T, V)
+    log_q = F.log_softmax(ref_logits, dim=-1)       # (B, T, V)
+    p = log_p.exp()                                 # (B, T, V)
 
-        per_token_kl = F.kl_div(
-            current_log_probs,
-            reference_probs,
-            log_target=False,
-            reduction="none",
-        ).sum(dim=-1)
+    # tokenwise KL : sum over vocabulary v
+    kl = (p * (log_p - log_q)).sum(dim=-1)          # (B, T)
 
-        mask_f = mask.to(per_token_kl.dtype)
-        masked_kl = (per_token_kl * mask_f).sum()
-        normalization = mask_f.sum().clamp_min(1.0)
-        return masked_kl / normalization
-
-    chosen_ids = batch["chosen_ids"]
-    chosen_mask = batch["chosen_mask"]
-    rejected_ids = batch["rejected_ids"]
-    rejected_mask = batch["rejected_mask"]
-
-    chosen_kl = _kl(chosen_ids, chosen_mask)
-    rejected_kl = _kl(rejected_ids, rejected_mask)
-    return 0.5 * (chosen_kl + rejected_kl)
+    kl = kl * mask
+    return kl.sum() / mask.sum()

@@ -8,39 +8,37 @@ import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
+from constants import LOG_PATTERN
 
 
 def parse_log_file(log_path):
-    """Extract (step, loss, kl_div, pref_acc) tuples from log file."""
+    """Extract (step, loss, kl_div) tuples from log file."""
     steps = []
     losses = []
     kl_divs = []
-    pref_accs = []
     
-    # Pattern to match: "Step 100: KL Div: 0.8652, Loss: 0.6932, Pref Acc: 0.750"
-    pattern = r'Step (\d+): KL Div: ([\d.]+), Loss: ([\d.]+), Pref Acc: ([\d.]+)'
+    # Use pattern from constants file
+    pattern = LOG_PATTERN
     
     with open(log_path, 'r') as f:
         for line in f:
             match = re.search(pattern, line)
             if match:
                 step = int(match.group(1))
-                kl_div = float(match.group(2))
-                loss = float(match.group(3))
-                pref_acc = float(match.group(4))
+                loss = float(match.group(2))
+                kl_div = float(match.group(3))
                 steps.append(step)
-                kl_divs.append(kl_div)
                 losses.append(loss)
-                pref_accs.append(pref_acc)
+                kl_divs.append(kl_div)
     
-    return steps, losses, kl_divs, pref_accs
+    return steps, losses, kl_divs
 
 
-def plot_metrics(steps, losses, kl_divs, pref_accs, output_dir=None):
-    """Plot loss, KL divergence, and preference accuracy over time."""
+def plot_metrics(steps, losses, kl_divs, output_dir=None):
+    """Plot loss and KL divergence over time."""
     
-    # Create figure with 3 subplots
-    fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+    # Create figure with 2 subplots
+    fig, axes = plt.subplots(2, 1, figsize=(12, 8))
     
     # Plot 1: Loss (log scale)
     log_losses = np.log(np.array(losses) + 1e-8)
@@ -56,14 +54,6 @@ def plot_metrics(steps, losses, kl_divs, pref_accs, output_dir=None):
     axes[1].set_ylabel('KL Divergence', fontsize=12)
     axes[1].set_title('KL Divergence Over Time', fontsize=14, fontweight='bold')
     axes[1].grid(True, alpha=0.3)
-    
-    # Plot 3: Preference Accuracy
-    axes[2].plot(steps, pref_accs, linewidth=1.5, alpha=0.7, color='red')
-    axes[2].set_xlabel('Step', fontsize=12)
-    axes[2].set_ylabel('Preference Accuracy', fontsize=12)
-    axes[2].set_title('Preference Accuracy Over Time', fontsize=14, fontweight='bold')
-    axes[2].grid(True, alpha=0.3)
-    axes[2].set_ylim([0, 1])  # Accuracy is between 0 and 1
     
     plt.tight_layout()
     
@@ -83,7 +73,7 @@ def main():
         log_file = sys.argv[1]
     
     try:
-        steps, losses, kl_divs, pref_accs = parse_log_file(log_file)
+        steps, losses, kl_divs = parse_log_file(log_file)
         
         if not steps:
             print(f"No training data found in {log_file}")
@@ -93,12 +83,11 @@ def main():
         print(f"Step range: {min(steps)} - {max(steps)}")
         print(f"Loss range: {min(losses):.4f} - {max(losses):.4f}")
         print(f"KL Div range: {min(kl_divs):.4f} - {max(kl_divs):.4f}")
-        print(f"Pref Acc range: {min(pref_accs):.4f} - {max(pref_accs):.4f}")
         
         # Use log file directory as output directory
         import os
         output_dir = os.path.dirname(log_file) if os.path.dirname(log_file) else "."
-        plot_metrics(steps, losses, kl_divs, pref_accs, output_dir)
+        plot_metrics(steps, losses, kl_divs, output_dir)
         
     except FileNotFoundError:
         print(f"Error: Log file '{log_file}' not found")
