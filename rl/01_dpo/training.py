@@ -143,8 +143,8 @@ for epoch in range(NUM_EPOCHS):
         # 4️⃣ Backward + Step
         #############################
         optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+        loss.backward()
+        optimizer.step()
 
         global_step += 1
 
