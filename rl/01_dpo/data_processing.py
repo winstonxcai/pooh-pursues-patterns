@@ -1,6 +1,6 @@
 import json
 
-from constants import DATA_SAVE_PATH, DATASET_NAME
+from constants import DATA_SAVE_PATH, DATASET_NAME, PROMPT_TEMPLATE
 from datasets import load_dataset
 from tqdm import tqdm
 
@@ -25,25 +25,25 @@ def main():
     """
     Main function for processing the Cosmos QA dataset.
     """
-    data = load_dataset(DATASET_NAME)["train"]
+    data = load_dataset(DATASET_NAME, split="train", trust_remote_code=True)
 
     with open(DATA_SAVE_PATH, "w") as f:
         for row in tqdm(data, desc="Processing dataset"):
 
             context = row["context"]
             question = row["question"]
-            options = row["answers"]
-            label = row["label"]
+            label = row["label"]  # 0-3, index of correct answer
 
-            prompt = f"Context: {context}\nQuestion: {question}\nAssistant:"
-            chosen = options[label]
+            # Get the correct answer
+            chosen = row[f"answer{label}"]
 
-            # generate 3 pairs (correct > each incorrect)
-            for i, opt in enumerate(options):
+            # Generate pairs (correct > each incorrect answer)
+            for i in range(4):  # There are 4 answer options (answer0, answer1, answer2, answer3)
                 if i == label:
                     continue
                 
-                rejected = opt
+                rejected = row[f"answer{i}"]
+                prompt = PROMPT_TEMPLATE.format(context=context, question=question, answer=chosen)
                 pair = build_pair(prompt, chosen, rejected)
                 f.write(json.dumps(pair) + "\n")
 
