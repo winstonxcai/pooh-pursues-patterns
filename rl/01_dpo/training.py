@@ -176,12 +176,9 @@ for epoch in range(NUM_EPOCHS):
             
             labels_ch = chosen_ids[:, 1:]
             labels_rj = rejected_ids[:, 1:]
-            
-            mask_ch = (labels_ch != 0) & (labels_ch != -100)
-            mask_rj = (labels_rj != 0) & (labels_rj != -100)
 
-            kl_ch = kl_divergence(policy_logits_ch, ref_logits_ch, mask_ch)
-            kl_rj = kl_divergence(policy_logits_rj, ref_logits_rj, mask_rj)
+            kl_ch = kl_divergence(policy_logits_ch, ref_logits_ch, labels_ch)
+            kl_rj = kl_divergence(policy_logits_rj, ref_logits_rj, labels_rj)
 
             kl_avg = 0.5 * (kl_ch + kl_rj)
             log_message = LOG_FORMAT.format(step=global_step, loss=loss.item(), kl=kl_avg.item())

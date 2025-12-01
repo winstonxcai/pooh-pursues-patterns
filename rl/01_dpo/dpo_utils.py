@@ -46,20 +46,26 @@ def dpo_loss(
     delta = (policy_chosen_logp - policy_rejected_logp) - (reference_chosen_logp - reference_rejected_logp)
     return -torch.log(torch.sigmoid(beta * delta)).mean()
 
-def kl_divergence(policy_logits, ref_logits, mask):
-    """
-    policy_logits: (B, T, V)
-    ref_logits:    (B, T, V)
-    mask:          (B, T)
-    returns: scalar KL
-    """
+def kl_divergence(policy_logits, ref_logits, labels):
+    # policy_logits, ref_logits: (B, T, V)
+    # labels: (B, T) with -100 for paddings
 
-    log_p = F.log_softmax(policy_logits, dim=-1)    # (B, T, V)
-    log_q = F.log_softmax(ref_logits, dim=-1)       # (B, T, V)
-    p = log_p.exp()                                 # (B, T, V)
+    # ONLY compute over next-token logprobs
+    vocab_dim = policy_logits.size(-1)
 
-    # tokenwise KL : sum over vocabulary v
-    kl = (p * (log_p - log_q)).sum(dim=-1)          # (B, T)
+    # Flatten for gather
+    policy_logp = F.log_softmax(policy_logits, dim=-1)
+    ref_logp = F.log_softmax(ref_logits, dim=-1)
 
-    kl = kl * mask
+    # gather logprobs for actual labels
+    # (B, T)
+    logp = policy_logp.gather(-1, labels.unsqueeze(-1)).squeeze(-1)
+    logq = ref_logp.gather(-1, labels.unsqueeze(-1)).squeeze(-1)
+
+    # mask out padding
+    mask = (labels != -100)
+
+    # token-level KL
+    kl = (logp - logq) * mask
+
     return kl.sum() / mask.sum()
