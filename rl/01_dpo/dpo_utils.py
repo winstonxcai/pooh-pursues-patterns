@@ -66,6 +66,6 @@ def kl_divergence(policy_logits, ref_logits, labels):
     mask = (labels != -100)
 
     # token-level KL
-    kl = (logp - logq) * mask
+    kl = (logp - logq).abs() * mask
 
     return kl.sum() / mask.sum()
