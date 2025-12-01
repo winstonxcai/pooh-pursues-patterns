@@ -1,8 +1,11 @@
 import json
 import random
+import warnings
 
 import torch
+from constants import DATA_SAVE_PATH, MAX_SEQ_LEN, MODEL_NAME, NUM_SAMPLES
 from torch.utils.data import Dataset
+from transformers import AutoTokenizer
 
 
 class CosmosQADataset(Dataset):
@@ -19,11 +22,52 @@ class CosmosQADataset(Dataset):
             num_samples: Number of samples to use
         """
         # randomly sample num_samples from the dataset
-        self.data = random.sample([json.loads(l) for l in open(path)], num_samples)
+        all_data = [json.loads(l) for l in open(path)]
+        self.data = random.sample(all_data, num_samples)
         self.tokenizer = tokenizer
         self.max_len = max_len
         self.num_samples = num_samples
         
+        # Verify that max_len is appropriate (at least 90% should fit)
+        self._verify_max_len()
+        
+    def _verify_max_len(self):
+        """
+        Check that at least 90% of tokenized sequences fit within max_len.
+        """
+        lengths = []
+        for row in self.data:
+            # Check both chosen and rejected sequences
+            chosen_text = row["prompt"] + " " + row["chosen"]
+            rejected_text = row["prompt"] + " " + row["rejected"]
+            
+            chosen_tokens = self.tokenizer(chosen_text, add_special_tokens=True)["input_ids"]
+            rejected_tokens = self.tokenizer(rejected_text, add_special_tokens=True)["input_ids"]
+            
+            lengths.append(len(chosen_tokens))
+            lengths.append(len(rejected_tokens))
+        
+        below_max = sum(1 for length in lengths if length <= self.max_len)
+        percentage = (below_max / len(lengths)) * 100
+        
+        max_length = max(lengths)
+        avg_length = sum(lengths) / len(lengths)
+        
+        print(f"Tokenized sequence length stats:")
+        print(f"  Max length: {max_length}")
+        print(f"  Average length: {avg_length:.1f}")
+        print(f"  Samples within max_len ({self.max_len}): {percentage:.1f}%")
+        
+        if percentage < 90:
+            warnings.warn(
+                f"Only {percentage:.1f}% of samples fit within max_len={self.max_len}. "
+                f"Consider increasing max_len to at least {max_length} to cover 100% of samples, "
+                f"or at least {int(avg_length * 1.5)} to cover ~90%.",
+                UserWarning
+            )
+        else:
+            print(f"✓ max_len={self.max_len} is appropriate ({percentage:.1f}% of samples fit)")
+    
     def tokenize(self, text):
         """
         Tokenize a text string.
@@ -72,3 +116,10 @@ class CosmosQADataset(Dataset):
         Get the length of the dataset.
         """
         return len(self.data)
+
+if __name__ == "__main__":
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+    dataset = CosmosQADataset(DATA_SAVE_PATH, tokenizer, MAX_SEQ_LEN, NUM_SAMPLES)

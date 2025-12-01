@@ -1,4 +1,5 @@
 import json
+import random
 
 from constants import DATA_SAVE_PATH, DATASET_NAME, PROMPT_TEMPLATE
 from datasets import load_dataset
@@ -50,16 +51,17 @@ def main():
             # Get the correct answer
             chosen = row[f"answer{label}"]
 
-            # Generate pairs (correct > each incorrect answer)
-            for i in range(4):  # There are 4 answer options (answer0, answer1, answer2, answer3)
-                if i == label:
-                    continue
-                
-                rejected = row[f"answer{i}"]
-                # Prompt should not include the answer - it will be concatenated in the dataset
-                prompt = PROMPT_TEMPLATE.format(context=context, question=question, answer="")
-                pair = build_pair(prompt, chosen, rejected)
-                f.write(json.dumps(pair) + "\n")
+            # Get all incorrect answer indices
+            incorrect_indices = [i for i in range(4) if i != label]
+            
+            # Randomly choose one incorrect answer
+            rejected_idx = random.choice(incorrect_indices)
+            rejected = row[f"answer{rejected_idx}"]
+            
+            # Prompt should not include the answer - it will be concatenated in the dataset
+            prompt = PROMPT_TEMPLATE.format(context=context, question=question, answer="")
+            pair = build_pair(prompt, chosen, rejected)
+            f.write(json.dumps(pair) + "\n")
 
     print(f"Saved DPO dataset to {DATA_SAVE_PATH}")
     print(f"Skipped {skipped_count} questions containing 'None of the above' answers")
