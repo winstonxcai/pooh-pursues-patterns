@@ -174,8 +174,11 @@ for epoch in range(NUM_EPOCHS):
             ref_logits_ch = ref_out_ch.logits[:, :-1, :]
             ref_logits_rj = ref_out_rj.logits[:, :-1, :]
             
-            labels_ch = chosen_ids[:, 1:]
-            labels_rj = rejected_ids[:, 1:]
+            # Mask out padding positions so KL only covers real tokens
+            labels_ch = chosen_ids[:, 1:].clone()
+            labels_rj = rejected_ids[:, 1:].clone()
+            labels_ch[chosen_mask[:, 1:] == 0] = -100
+            labels_rj[rejected_mask[:, 1:] == 0] = -100
 
             kl_ch = kl_divergence(policy_logits_ch, ref_logits_ch, labels_ch)
             kl_rj = kl_divergence(policy_logits_rj, ref_logits_rj, labels_rj)
@@ -189,4 +192,3 @@ for epoch in range(NUM_EPOCHS):
 
 logger.info("Accuracy improvement:")
 logger.info("Δ accuracy = %.4f", acc_after - acc_before)
-
