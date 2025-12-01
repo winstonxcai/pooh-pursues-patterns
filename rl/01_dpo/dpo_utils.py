@@ -49,23 +49,13 @@ def dpo_loss(
 def kl_divergence(policy_logits, ref_logits, labels):
     # policy_logits, ref_logits: (B, T, V)
     # labels: (B, T) with -100 for paddings
-
-    # ONLY compute over next-token logprobs
-    vocab_dim = policy_logits.size(-1)
-
-    # Flatten for gather
+    # Compute full-token KL so rare tokens aren't overweighted.
     policy_logp = F.log_softmax(policy_logits, dim=-1)
     ref_logp = F.log_softmax(ref_logits, dim=-1)
 
-    # gather logprobs for actual labels
-    # (B, T)
-    logp = policy_logp.gather(-1, labels.unsqueeze(-1)).squeeze(-1)
-    logq = ref_logp.gather(-1, labels.unsqueeze(-1)).squeeze(-1)
+    # token KL across vocab, then mask padding and average
+    kl_per_token = F.kl_div(policy_logp, ref_logp, reduction="none", log_target=True).sum(dim=-1)
+    mask = (labels != -100).to(policy_logits.dtype)
+    kl_masked = kl_per_token * mask
 
-    # mask out padding
-    mask = (labels != -100)
-
-    # token-level KL
-    kl = (logp - logq).abs() * mask
-
-    return kl.sum() / mask.sum()
+    return kl_masked.sum() / mask.sum().clamp_min(1.0)
