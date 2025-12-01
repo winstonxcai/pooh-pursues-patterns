@@ -1,11 +1,10 @@
 import logging
 
 import torch
-from constants import (ALPHA, BATCH_SIZE, BETA, DATA_SAVE_PATH, DATASET_NAME,
-                       DEVICE, GRAD_ACCUM_STEPS, LEARNING_RATE, LOG_FILE,
-                       LOG_FORMAT, LOGGING_INTERVAL, MAX_SEQ_LEN, MODEL_NAME,
-                       NUM_EPOCHS, NUM_SAMPLES, PROMPT_TEMPLATE, SEED,
-                       SPLIT_RATIO, WARMUP_RATIO, R)
+from constants import (ALPHA, BATCH_SIZE, BETA, DATA_SAVE_PATH, DEVICE,
+                       LEARNING_RATE, LOG_FILE, LOG_FORMAT, LOGGING_INTERVAL,
+                       MAX_SEQ_LEN, MODEL_NAME, NUM_EPOCHS, NUM_SAMPLES, SEED,
+                       SPLIT_RATIO, R)
 from custom_dataset import CosmosQADataset
 from dpo_utils import dpo_loss, kl_divergence, sequence_logprobs
 from lora import inject_lora
