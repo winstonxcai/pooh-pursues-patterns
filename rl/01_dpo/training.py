@@ -1,3 +1,5 @@
+import logging
+
 import torch
 from constants import (ALPHA, BATCH_SIZE, BETA, DATA_SAVE_PATH, DATASET_NAME,
                        DEVICE, GRAD_ACCUM_STEPS, LEARNING_RATE, LOG_FILE,
@@ -10,6 +12,17 @@ from lora import inject_lora
 from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ],
+)
+logger = logging.getLogger(__name__)
 
 ############################################################
 # LOAD MODEL + TOKENIZER
@@ -38,17 +51,13 @@ policy_model.train()
 full_dataset = CosmosQADataset(DATA_SAVE_PATH, tokenizer, MAX_SEQ_LEN, NUM_SAMPLES)
 
 # 90% train, 10% test split
-test_size = int(0.10 * len(full_dataset))
-train_size = len(full_dataset) - test_size
+train_size = int(SPLIT_RATIO * len(full_dataset))
+test_size = len(full_dataset) - train_size
 
-train_dataset, test_dataset = random_split(
-    full_dataset, 
-    [train_size, test_size],
-    generator=torch.Generator().manual_seed(42)
-)
+train_dataset, test_dataset = random_split(full_dataset, [train_size, test_size], generator=torch.Generator().manual_seed(SEED))
 
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-test_loader  = DataLoader(test_dataset,  batch_size=BATCH_SIZE, shuffle=False)
+test_loader  = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
 
 ############################################################
@@ -89,9 +98,9 @@ def evaluate_accuracy(model, ref_model, loader):
 # PRE-TRAINING EVALUATION
 ############################################################
 
-print("\n🔍 Evaluating BEFORE training...")
+logger.info("Evaluating BEFORE training...")
 acc_before = evaluate_accuracy(policy_model, ref_model, test_loader)
-print(f"Accuracy before training: {acc_before:.4f}")
+logger.info("Accuracy before training: %.4f", acc_before)
 
 
 ############################################################
@@ -111,7 +120,7 @@ optimizer = torch.optim.AdamW(
 global_step = 0
 
 for epoch in range(NUM_EPOCHS):
-    print(f"\n====== Epoch {epoch+1}/{NUM_EPOCHS} ======")
+    logger.info("====== Epoch %d/%d ======", epoch + 1, NUM_EPOCHS)
 
     for batch in tqdm(train_loader):
 
@@ -175,11 +184,12 @@ for epoch in range(NUM_EPOCHS):
             kl_rj = kl_divergence(policy_logits_rj, ref_logits_rj, mask_rj)
 
             kl_avg = 0.5 * (kl_ch + kl_rj)
-            print(LOG_FORMAT.format(step=global_step, loss=loss.item(), kl=kl_avg.item()))
+            log_message = LOG_FORMAT.format(step=global_step, loss=loss.item(), kl=kl_avg.item())
+            logger.info(log_message)
 
     acc_after = evaluate_accuracy(policy_model, ref_model, test_loader)
-    print(f"Accuracy after {epoch+1} epochs: {acc_after:.4f}")
+    logger.info("Accuracy after %d epochs: %.4f", epoch + 1, acc_after)
 
-print("\n📈 Accuracy improvement:")
-print(f"Δ accuracy = {acc_after - acc_before:.4f}")
+logger.info("Accuracy improvement:")
+logger.info("Δ accuracy = %.4f", acc_after - acc_before)
 
