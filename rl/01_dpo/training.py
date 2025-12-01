@@ -31,17 +31,17 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.pad_token_id = tokenizer.eos_token_id
+# 1. Load base
+base_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME)
 
-policy_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
-ref_model     = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
+# 2. Create policy model with LoRA
+policy_model = inject_lora(base_model, R, ALPHA).to(DEVICE)
 
+# 3. Reload reference model *cleanly*
+ref_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME).to(DEVICE)
 ref_model.eval()
 for p in ref_model.parameters():
     p.requires_grad = False
-
-policy_model = inject_lora(policy_model, R, ALPHA)
-policy_model.train()
-
 
 ############################################################
 # LOAD DATASET
