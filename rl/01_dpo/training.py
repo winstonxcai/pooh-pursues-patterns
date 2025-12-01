@@ -152,6 +152,7 @@ for epoch in range(NUM_EPOCHS):
         #############################
         optimizer.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(policy_model.parameters(), max_norm=1.0)
         optimizer.step()
 
         global_step += 1
